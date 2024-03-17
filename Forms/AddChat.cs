@@ -11,7 +11,9 @@ using System;
 using System.Collections.Generic;
 using db = AIPrompts.DBInOut;
 using AIPrompts.Models;
-using System.Security.Cryptography.Pkcs;
+using Microsoft.Identity.Client;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
+// using System.Security.Cryptography.Pkcs;
 
 namespace AIPrompts.Forms
 {
@@ -22,6 +24,7 @@ namespace AIPrompts.Forms
         SQLAccess                sql            = new SQLAccess();
         List<ChatCategoryClass> _chatCategory   = new List<ChatCategoryClass>();
         List<ChatGPTClass>      _chatGPT        = new List<ChatGPTClass>();
+        CustMsgBox              CustMsgBox      = new CustMsgBox();
 
         #endregion
 
@@ -141,14 +144,23 @@ namespace AIPrompts.Forms
             // Variables
             string  _promptTitle = txtPromptTitle.Text.Trim();
             string  _prompt      = txtPrompt.Text.Trim();
-            string  _rank        = txtRank.Text.Trim();
             string  _temp        = "";
-            bool    _NSFW        = ckbxNSFW.Checked;
+            string  _result      = "";
+            int     _NSFW        = 0;
+            int     _rank        = 0;
             int     _category1   = 0;
             int     _category2   = 0;
             int     _category3   = 0;
             int     _gpt         = 0;
 
+            //   Setup Messagebox
+            CustMsgBox              = new CustMsgBox();
+            CustMsgBox.Title        = "Add GPT Prompt";
+            CustMsgBox.Message      = "Add GPT Prompt is not currently set up.";
+            CustMsgBox.ButtonText1  = "OK";
+            CustMsgBox.Icon = (int)_icon.Error;
+
+            // Do Checks in seperate method
             // Get Category 1
             _temp = cboCat1.Text.Trim();
             if (string.IsNullOrEmpty(_temp))
@@ -198,37 +210,86 @@ namespace AIPrompts.Forms
             _gpt = gptGet();
 
             //  Check the data
+            _result = checkInputs();
+            if(_result == "Error") return;
+
+            //  Create GPT Class
+            ChatGPTPrompt GPTPrompt = new ChatGPTPrompt();
+
+            //  Add to class
+            GPTPrompt.PromptTitle   = _promptTitle;
+            GPTPrompt.Prompt        = _prompt;
+            GPTPrompt.Rank          = _rank;
+            GPTPrompt.Category1     = _category1;
+            GPTPrompt.Category2     = _category2;
+            GPTPrompt.Category3     = _category3;
+            GPTPrompt.GPTVersion    = _gpt;
+            GPTPrompt.NSFW          = _NSFW;
+            
+            //  Add to database
+
+
+
+
+        }
+
+
+        public string checkInputs()
+        {
+            //  Variables
+            string _promptTitle     = txtPromptTitle.Text.Trim();
+            string _prompt          = txtPrompt.Text.Trim();
+            string _rank            = txtRank.Text.Trim();
+            string _temp            = "";
+            string _result          = "Good";
+            CustMsgBox.Title        = "Add GPT Prompt - Check Inputs";
+            CustMsgBox.Message      = "Add GPT Prompt is not currently set up.";
+            CustMsgBox.ButtonText1  = "OK";
+            CustMsgBox.Icon = (int)_icon.Error;
+
+            //  Check the data
             //      Prompt Title
             if (string.IsNullOrEmpty(_promptTitle))
             {
-                MessageBox.Show("Prompt Title is missing or is blank. Please fill in this textbox and try again. Thank you.", "Missing Prompt Title,", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
+                CustMsgBox.Message      = "Prompt Title is missing or is blank. Please fill in this textbox and try again. Thank you.";
+                CustMsgBox.Title        = "Add GPT Prompt - Check Inputs (Missing Prompt Title)";
+                MsgBoxUser custMsgBox   = new MsgBoxUser(CustMsgBox);
+                _result                 = "Error";
+                return _result;
             }
 
             //      Prompt
             if (string.IsNullOrEmpty(_prompt))
             {
-                MessageBox.Show("Prompt is missing or is blank. Please fill in this textbox and try again. Thank you.", "Missing Prompt,", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
+                CustMsgBox.Message      = "Prompt is missing or is blank. Please fill in this textbox and try again. Thank you.";
+                CustMsgBox.Title        = "Add GPT Prompt - Check Inputs (Missing GPT Prompt)";
+                MsgBoxUser custMsgBox   = new MsgBoxUser(CustMsgBox);
+                _result                 = "Error";
+                return _result;
             }
 
             //      Rank
             if (string.IsNullOrEmpty(_rank))
             {
-                MessageBox.Show("Rank is missing or is blank. Please fill in this textbox and try again. Thank you.", "Missing Rank,", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
+                CustMsgBox.Message      = "Rank is missing or is blank. Please fill in this textbox and try again. Thank you.";
+                CustMsgBox.Title        = "Add GPT Prompt - Check Inputs (Missing Rank)";
+                MsgBoxUser custMsgBox   = new MsgBoxUser(CustMsgBox);
+                _result                 = "Error";
+                return _result;
             }
 
             //      GPT
             _temp = cboGPT.Text.Trim();
             if (string.IsNullOrEmpty(_temp))
             {
-                MessageBox.Show("GPT is missing or is blank. Please fill in this textbox and try again. Thank you.", "Missing GPT,", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
+                CustMsgBox.Message      = "GPT is missing or is blank. Please select a GPT and try again. Thank you.";
+                CustMsgBox.Title        = "Add GPT Prompt - Check Inputs (Missing GPT)";
+                MsgBoxUser custMsgBox   = new MsgBoxUser(CustMsgBox);
+                _result                 = "Error";
+                return _result;
             }
 
-
-
+            return _result;
         }
 
         /// <summary>
@@ -354,7 +415,17 @@ namespace AIPrompts.Forms
         /// <param name="_message"></param>
         public void NotWorkingMessage(string _message)
         {
-            MessageBox.Show(_message + " is not currently set up.");
+            CustMsgBox              = new CustMsgBox();
+            CustMsgBox.Title        = _message + " Not Working";
+            CustMsgBox.Message      = _message + " is not currently set up.";
+            CustMsgBox.ButtonText1  = "OK";
+            CustMsgBox.Icon = (int)_icon.Misc;
+
+            MsgBoxUser custMsgBox = new MsgBoxUser(CustMsgBox);
+            int Result = (int)custMsgBox.ShowDialog();
+            int Result2 = (int)custMsgBox.Result; 
+
+
         }
 
         /// <summary>
@@ -376,7 +447,26 @@ namespace AIPrompts.Forms
 
         #endregion
 
+        #region enums
+        /// <summary>
+        /// Enum: Icon  Custom Messagebox Icons
+        /// </summary>
+        public enum _icon        
+        {
+            Information = 1,
+            Warning     = 2,
+            Error       = 3,
+            Misc        = 4
+        }
 
+        #endregion
+
+        // Sample Messagebox
+        //CustMsgBox = new CustMsgBox();
+        //CustMsgBox.Title = "";
+        //CustMsgBox.Message = "";
+        //CustMsgBox.ButtonText1 = "";
+        //CustMsgBox.Icon = (int) _icon.Misc;
 
 
     }

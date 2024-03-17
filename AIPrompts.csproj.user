@@ -10,5 +10,11 @@
     <Compile Update="Forms\Main.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\MsgBoxSystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\MsgBoxUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
