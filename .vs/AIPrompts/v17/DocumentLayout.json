@@ -3,24 +3,59 @@
   "WorkspaceRootPath": "D:\\Dev\\AIPrompts\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|d:\\dev\\aiprompts\\forms\\msgboxsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\msgboxsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\forms\\msgboxuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\msgboxuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\forms\\addimageprompt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\addimageprompt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\dbinout.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:dbinout.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\forms\\addchat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\addchat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\mlpar\\AppData\\Local\\Temp\\.vsdbgsrc\\71127f9e068fc911d0eecd4449b7183defd8e2fe86ef85952473e417dd246eeb\\Application.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|d:\\dev\\aiprompts\\models\\imagesamplemethod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:models\\imagesamplemethod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|d:\\dev\\aiprompts\\models\\imageaspectratio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:models\\imageaspectratio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|d:\\dev\\aiprompts\\forms\\addimageprompt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\addimageprompt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|d:\\dev\\aiprompts\\models\\imagecategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:models\\imagecategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|d:\\dev\\aiprompts\\models\\imagestyle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:models\\imagestyle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|d:\\dev\\aiprompts\\forms\\addimageprompt.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\addimageprompt.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\forms\\addchat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\addchat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\forms\\addchat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\addchat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\forms\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\forms\\msgboxsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\msgboxsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\forms\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +65,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,62 +73,176 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MsgBoxSystem.cs [Design]",
-              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\MsgBoxSystem.cs",
-              "RelativeDocumentMoniker": "Forms\\MsgBoxSystem.cs",
-              "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\MsgBoxSystem.cs [Design]",
-              "RelativeToolTip": "Forms\\MsgBoxSystem.cs [Design]",
+              "DocumentIndex": 4,
+              "Title": "ImageAspectRatio.cs",
+              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Models\\ImageAspectRatio.cs",
+              "RelativeDocumentMoniker": "Models\\ImageAspectRatio.cs",
+              "ToolTip": "D:\\Dev\\AIPrompts\\Models\\ImageAspectRatio.cs",
+              "RelativeToolTip": "Models\\ImageAspectRatio.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-17T18:29:54.049Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2024-03-26T03:04:13.314Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MsgBoxUser.cs [Design]",
-              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\MsgBoxUser.cs",
-              "RelativeDocumentMoniker": "Forms\\MsgBoxUser.cs",
-              "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\MsgBoxUser.cs [Design]",
-              "RelativeToolTip": "Forms\\MsgBoxUser.cs [Design]",
+              "DocumentIndex": 3,
+              "Title": "ImageSampleMethod.cs",
+              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Models\\ImageSampleMethod.cs",
+              "RelativeDocumentMoniker": "Models\\ImageSampleMethod.cs",
+              "ToolTip": "D:\\Dev\\AIPrompts\\Models\\ImageSampleMethod.cs",
+              "RelativeToolTip": "Models\\ImageSampleMethod.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAABZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-17T18:26:02.896Z",
+              "WhenOpened": "2024-03-26T03:04:31.967Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ImageCategory.cs",
+              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Models\\ImageCategory.cs",
+              "RelativeDocumentMoniker": "Models\\ImageCategory.cs",
+              "ToolTip": "D:\\Dev\\AIPrompts\\Models\\ImageCategory.cs",
+              "RelativeToolTip": "Models\\ImageCategory.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-26T01:00:43.601Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ImageStyle.cs",
+              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Models\\ImageStyle.cs",
+              "RelativeDocumentMoniker": "Models\\ImageStyle.cs",
+              "ToolTip": "D:\\Dev\\AIPrompts\\Models\\ImageStyle.cs",
+              "RelativeToolTip": "Models\\ImageStyle.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-26T00:52:09.575Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AddImagePrompt.cs",
+              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\AddImagePrompt.cs",
+              "RelativeDocumentMoniker": "Forms\\AddImagePrompt.cs",
+              "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\AddImagePrompt.cs",
+              "RelativeToolTip": "Forms\\AddImagePrompt.cs",
+              "ViewState": "AQIAACcBAAAAAAAAAAAqwDUBAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-24T01:48:01.984Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AddImagePrompt.Designer.cs",
+              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\AddImagePrompt.Designer.cs",
+              "RelativeDocumentMoniker": "Forms\\AddImagePrompt.Designer.cs",
+              "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\AddImagePrompt.Designer.cs",
+              "RelativeToolTip": "Forms\\AddImagePrompt.Designer.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAOkCAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-26T00:42:31.097Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AddImagePrompt.cs [Design]",
+              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\AddImagePrompt.cs",
+              "RelativeDocumentMoniker": "Forms\\AddImagePrompt.cs",
+              "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\AddImagePrompt.cs [Design]",
+              "RelativeToolTip": "Forms\\AddImagePrompt.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-25T14:54:40.21Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Application.cs",
+              "DocumentMoniker": "C:\\Users\\mlpar\\AppData\\Local\\Temp\\.vsdbgsrc\\71127f9e068fc911d0eecd4449b7183defd8e2fe86ef85952473e417dd246eeb\\Application.cs",
+              "ToolTip": "C:\\Users\\mlpar\\AppData\\Local\\Temp\\.vsdbgsrc\\71127f9e068fc911d0eecd4449b7183defd8e2fe86ef85952473e417dd246eeb\\Application.cs [Read Only]",
+              "ViewState": "AQIAANsAAAAAAAAAAAAhwOIAAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-24T04:57:26.377Z",
+              "EditorCaption": " [Read Only]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "DBInOut.cs",
               "DocumentMoniker": "D:\\Dev\\AIPrompts\\DBInOut.cs",
               "RelativeDocumentMoniker": "DBInOut.cs",
               "ToolTip": "D:\\Dev\\AIPrompts\\DBInOut.cs",
               "RelativeToolTip": "DBInOut.cs",
-              "ViewState": "AQIAAFEAAAAAAAAAAAAwwHIAAAARAAAA",
+              "ViewState": "AQIAABMCAAAAAAAAAAAiwDUCAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-17T16:56:24.868Z"
+              "WhenOpened": "2024-03-24T03:17:19.464Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 12,
+              "Title": "MsgBoxSystem.cs",
+              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\MsgBoxSystem.cs",
+              "RelativeDocumentMoniker": "Forms\\MsgBoxSystem.cs",
+              "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\MsgBoxSystem.cs",
+              "RelativeToolTip": "Forms\\MsgBoxSystem.cs",
+              "ViewState": "AQIAAHkAAAAAAAAAAAAowI0AAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-24T04:36:13.867Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "AddChat.cs",
               "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\AddChat.cs",
               "RelativeDocumentMoniker": "Forms\\AddChat.cs",
               "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\AddChat.cs",
               "RelativeToolTip": "Forms\\AddChat.cs",
-              "ViewState": "AQIAAMQAAAAAAAAAAAAwwOUAAAAAAAAA",
+              "ViewState": "AQIAABQCAAAAAAAAAAAAACYCAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-17T16:33:57.889Z"
+              "WhenOpened": "2024-03-23T01:20:05.771Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "AddChat.cs [Design]",
               "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\AddChat.cs",
               "RelativeDocumentMoniker": "Forms\\AddChat.cs",
               "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\AddChat.cs [Design]",
               "RelativeToolTip": "Forms\\AddChat.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-17T16:20:59.307Z"
+              "WhenOpened": "2024-03-24T02:55:27.168Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Main.cs",
+              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\Main.cs",
+              "RelativeDocumentMoniker": "Forms\\Main.cs",
+              "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\Main.cs",
+              "RelativeToolTip": "Forms\\Main.cs",
+              "ViewState": "AQIAAHMAAAAAAAAAAAAwwIYAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-23T23:07:20.161Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Main.cs [Design]",
+              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\Main.cs",
+              "RelativeDocumentMoniker": "Forms\\Main.cs",
+              "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\Main.cs [Design]",
+              "RelativeToolTip": "Forms\\Main.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-23T23:07:12.138Z"
             }
           ]
         }

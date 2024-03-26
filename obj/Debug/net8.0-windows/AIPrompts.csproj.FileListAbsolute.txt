@@ -124,3 +124,6 @@ D:\Dev\AIPrompts\obj\Debug\net8.0-windows\AIPrompts.genruntimeconfig.cache
 D:\Dev\AIPrompts\obj\Debug\net8.0-windows\ref\AIPrompts.dll
 D:\Dev\AIPrompts\obj\Debug\net8.0-windows\AIPrompts.Forms.MsgBoxUser.resources
 D:\Dev\AIPrompts\obj\Debug\net8.0-windows\AIPrompts.Properties.Resources.resources
+D:\Dev\AIPrompts\obj\Debug\net8.0-windows\AIPrompts.Forms.MsgBoxSystem.resources
+D:\Dev\AIPrompts\obj\Debug\net8.0-windows\AIPrompts.Forms.GPTMaint.resources
+D:\Dev\AIPrompts\obj\Debug\net8.0-windows\AIPrompts.Forms.AddImagePrompt.resources

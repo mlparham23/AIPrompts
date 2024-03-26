@@ -25,14 +25,14 @@ namespace AIPrompts
             public DbSet<ChatGPTClass>          chatChatGPTs        { get; set; }
             public DbSet<ChatCategoryClass>     chatCategories      { get; set; }
             public DbSet<ChatGPTPrompt>         chatGPTPrompts      { get; set; }
-            public DbSet<ImageSettingsClass>    imageSettings       { get; set; }
-            public DbSet<ImageSiteClass>        imageSites          { get; set; }
-            public DbSet<ImageStyleClass>       imageStyles         { get; set; }
-            public DbSet<ImageLoraClass>        imageLoras          { get; set; }
-            public DbSet<ImageModelClass>       imageModel          { get; set; }
-            public DbSet<ImageCategoryClass>    imageCategory       { get; set; }
-            public DbSet<ImagePromptClass>      imagePrompt         { get; set; }
-            public DbSet<ImageFeatureClass>     imageFeature        { get; set; }
+            public DbSet<ImageSettings>    imageSettings       { get; set; }
+            public DbSet<ImageSite>        imageSites          { get; set; }
+            public DbSet<ImageStyle>       imageStyles         { get; set; }
+            public DbSet<ImageLora>        imageLoras          { get; set; }
+            public DbSet<ImageModel>       imageModel          { get; set; }
+            public DbSet<ImageCategory>    imageCategory       { get; set; }
+            public DbSet<ImagePrompt>      imagePrompt         { get; set; }
+            public DbSet<ImageFeature>     imageFeature        { get; set; }
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             { 
@@ -44,7 +44,7 @@ namespace AIPrompts
         /// Get all Loras in ascending order
         /// </summary>
         /// <returns></returns>
-        public async Task<List<ImageLoraClass>> ImageGetAllLora()
+        public async Task<List<ImageLora>> ImageGetAllLora()
         {
             using (var context = new MyDbContext())
             { 

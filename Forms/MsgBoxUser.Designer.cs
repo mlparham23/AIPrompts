@@ -143,7 +143,7 @@
             Button6.TabIndex = 8;
             Button6.Text = "CANCEL";
             Button6.UseVisualStyleBackColor = false;
-            Button6.Click += button6_Click;
+            Button6.Click += Button6_Click;
             // 
             // MsgBoxUser
             // 

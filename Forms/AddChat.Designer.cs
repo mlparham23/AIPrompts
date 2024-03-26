@@ -52,6 +52,7 @@
             cboCat1 = new ComboBox();
             cboCat2 = new ComboBox();
             cboCat3 = new ComboBox();
+            btnRefreshDropdowns = new Button();
             mnustrp.SuspendLayout();
             SuspendLayout();
             // 
@@ -60,7 +61,7 @@
             mnustrp.Items.AddRange(new ToolStripItem[] { mnustrpFile, mnustrpChat });
             mnustrp.Location = new Point(0, 0);
             mnustrp.Name = "mnustrp";
-            mnustrp.Size = new Size(1035, 24);
+            mnustrp.Size = new Size(1094, 24);
             mnustrp.TabIndex = 0;
             mnustrp.Text = "menuStrip1";
             // 
@@ -126,7 +127,8 @@
             // 
             // txtPrompt
             // 
-            txtPrompt.Location = new Point(12, 77);
+            txtPrompt.Font = new Font("Segoe UI", 12F);
+            txtPrompt.Location = new Point(21, 77);
             txtPrompt.Multiline = true;
             txtPrompt.Name = "txtPrompt";
             txtPrompt.ScrollBars = ScrollBars.Vertical;
@@ -154,7 +156,7 @@
             // lblCategory1
             // 
             lblCategory1.AutoSize = true;
-            lblCategory1.Location = new Point(904, 59);
+            lblCategory1.Location = new Point(936, 59);
             lblCategory1.Name = "lblCategory1";
             lblCategory1.Size = new Size(64, 15);
             lblCategory1.TabIndex = 7;
@@ -163,7 +165,7 @@
             // lblCategory3
             // 
             lblCategory3.AutoSize = true;
-            lblCategory3.Location = new Point(904, 168);
+            lblCategory3.Location = new Point(936, 168);
             lblCategory3.Name = "lblCategory3";
             lblCategory3.Size = new Size(64, 15);
             lblCategory3.TabIndex = 9;
@@ -172,7 +174,7 @@
             // lblGPT
             // 
             lblGPT.AutoSize = true;
-            lblGPT.Location = new Point(922, 223);
+            lblGPT.Location = new Point(954, 223);
             lblGPT.Name = "lblGPT";
             lblGPT.Size = new Size(28, 15);
             lblGPT.TabIndex = 11;
@@ -181,9 +183,10 @@
             // btnCloseWindow
             // 
             btnCloseWindow.BackColor = Color.FromArgb(192, 255, 255);
-            btnCloseWindow.Location = new Point(887, 339);
+            btnCloseWindow.Font = new Font("Segoe UI", 12F);
+            btnCloseWindow.Location = new Point(880, 427);
             btnCloseWindow.Name = "btnCloseWindow";
-            btnCloseWindow.Size = new Size(99, 23);
+            btnCloseWindow.Size = new Size(177, 32);
             btnCloseWindow.TabIndex = 13;
             btnCloseWindow.Text = "Close Window";
             btnCloseWindow.UseVisualStyleBackColor = false;
@@ -192,9 +195,10 @@
             // btnReset
             // 
             btnReset.BackColor = Color.FromArgb(192, 255, 255);
-            btnReset.Location = new Point(887, 310);
+            btnReset.Font = new Font("Segoe UI", 12F);
+            btnReset.Location = new Point(880, 317);
             btnReset.Name = "btnReset";
-            btnReset.Size = new Size(99, 23);
+            btnReset.Size = new Size(177, 32);
             btnReset.TabIndex = 14;
             btnReset.Text = "Reset";
             btnReset.UseVisualStyleBackColor = false;
@@ -203,9 +207,10 @@
             // btnAdd
             // 
             btnAdd.BackColor = Color.FromArgb(192, 255, 255);
-            btnAdd.Location = new Point(887, 281);
+            btnAdd.Font = new Font("Segoe UI", 12F);
+            btnAdd.Location = new Point(880, 279);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(99, 23);
+            btnAdd.Size = new Size(177, 32);
             btnAdd.TabIndex = 15;
             btnAdd.Text = "Add";
             btnAdd.UseVisualStyleBackColor = false;
@@ -216,14 +221,14 @@
             cboGPT.FormattingEnabled = true;
             cboGPT.Location = new Point(854, 241);
             cboGPT.Name = "cboGPT";
-            cboGPT.Size = new Size(165, 23);
+            cboGPT.Size = new Size(228, 23);
             cboGPT.TabIndex = 16;
-            cboGPT.SelectedIndexChanged += cboGPT_SelectedIndexChanged;
+           // cboGPT.SelectedIndexChanged += cboGPT_SelectedIndexChanged;
             // 
             // lblCategory2
             // 
             lblCategory2.AutoSize = true;
-            lblCategory2.Location = new Point(904, 114);
+            lblCategory2.Location = new Point(936, 114);
             lblCategory2.Name = "lblCategory2";
             lblCategory2.Size = new Size(64, 15);
             lblCategory2.TabIndex = 17;
@@ -244,7 +249,7 @@
             cboCat1.FormattingEnabled = true;
             cboCat1.Location = new Point(854, 77);
             cboCat1.Name = "cboCat1";
-            cboCat1.Size = new Size(165, 23);
+            cboCat1.Size = new Size(228, 23);
             cboCat1.TabIndex = 21;
             // 
             // cboCat2
@@ -252,7 +257,7 @@
             cboCat2.FormattingEnabled = true;
             cboCat2.Location = new Point(854, 132);
             cboCat2.Name = "cboCat2";
-            cboCat2.Size = new Size(165, 23);
+            cboCat2.Size = new Size(228, 23);
             cboCat2.TabIndex = 22;
             // 
             // cboCat3
@@ -260,14 +265,27 @@
             cboCat3.FormattingEnabled = true;
             cboCat3.Location = new Point(854, 186);
             cboCat3.Name = "cboCat3";
-            cboCat3.Size = new Size(165, 23);
+            cboCat3.Size = new Size(228, 23);
             cboCat3.TabIndex = 23;
+            // 
+            // btnRefreshDropdowns
+            // 
+            btnRefreshDropdowns.BackColor = Color.FromArgb(192, 255, 255);
+            btnRefreshDropdowns.Font = new Font("Segoe UI", 12F);
+            btnRefreshDropdowns.Location = new Point(880, 355);
+            btnRefreshDropdowns.Name = "btnRefreshDropdowns";
+            btnRefreshDropdowns.Size = new Size(177, 32);
+            btnRefreshDropdowns.TabIndex = 24;
+            btnRefreshDropdowns.Text = "Refresh Dropdowns";
+            btnRefreshDropdowns.UseVisualStyleBackColor = false;
+            btnRefreshDropdowns.Click += btnRefreshDropdowns_Click;
             // 
             // AddChat
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1035, 717);
+            ClientSize = new Size(1094, 717);
+            Controls.Add(btnRefreshDropdowns);
             Controls.Add(cboCat3);
             Controls.Add(cboCat2);
             Controls.Add(cboCat1);
@@ -323,5 +341,6 @@
         private ComboBox cboCat1;
         private ComboBox cboCat2;
         private ComboBox cboCat3;
+        private Button btnRefreshDropdowns;
     }
 }

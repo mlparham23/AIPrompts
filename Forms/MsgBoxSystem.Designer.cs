@@ -63,6 +63,7 @@
             Button3.TabIndex = 8;
             Button3.Text = "CANCEL";
             Button3.UseVisualStyleBackColor = false;
+            Button3.Click += Button3_Click_1;
             // 
             // Button2
             // 
@@ -74,6 +75,7 @@
             Button2.TabIndex = 7;
             Button2.Text = "CANCEL";
             Button2.UseVisualStyleBackColor = false;
+            Button2.Click += Button2_Click_1;
             // 
             // Button1
             // 
@@ -85,6 +87,7 @@
             Button1.TabIndex = 6;
             Button1.Text = "CANCEL";
             Button1.UseVisualStyleBackColor = false;
+            Button1.Click += Button1_Click_1;
             // 
             // txtTitle
             // 
@@ -108,6 +111,7 @@
             Button6.TabIndex = 11;
             Button6.Text = "CANCEL";
             Button6.UseVisualStyleBackColor = false;
+            Button6.Click += Button6_Click_1;
             // 
             // Button5
             // 
@@ -119,6 +123,7 @@
             Button5.TabIndex = 10;
             Button5.Text = "CANCEL";
             Button5.UseVisualStyleBackColor = false;
+            Button5.Click += Button5_Click_1;
             // 
             // Button4
             // 
@@ -130,6 +135,7 @@
             Button4.TabIndex = 9;
             Button4.Text = "CANCEL";
             Button4.UseVisualStyleBackColor = false;
+            Button4.Click += Button4_Click_1;
             // 
             // txtMessage
             // 

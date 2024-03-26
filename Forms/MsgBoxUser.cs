@@ -1,13 +1,5 @@
 ﻿using AIPrompts.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices.Marshalling;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AIPrompts.Forms
@@ -17,12 +9,12 @@ namespace AIPrompts.Forms
         #region Startup
 
         public int Result { get; set; }
-        CustMsgBox cmb = new CustMsgBox();
+        private readonly CustMsgBox _custMsgBox;        // = new CustMsgBox();
 
         public MsgBoxUser(CustMsgBox custMsgBox)
         {
             InitializeComponent();
-            cmb = custMsgBox;
+            _custMsgBox = custMsgBox;
         }
 
         #endregion
@@ -36,7 +28,7 @@ namespace AIPrompts.Forms
         /// <param name="e"></param>
         private void MsgBoxUser_Load(object sender, EventArgs e)
         {
-            Populate();
+            PopulateForm();
         }
 
         #endregion
@@ -46,28 +38,54 @@ namespace AIPrompts.Forms
         /// <summary>
         /// Populate the form
         /// </summary>
-        private void Populate()
+        private void PopulateForm()
         {
-            txtTitle.Text = cmb.Title.Trim();
-            txtMessage.Text = cmb.Message.Trim();
-            if (!string.IsNullOrEmpty(cmb.ButtonText1)) { Button1.Visible = true; Button1.Text = cmb.ButtonText1.Trim(); } else { Button1.Visible = false; }
-            if (!string.IsNullOrEmpty(cmb.ButtonText2)) { Button2.Visible = true; Button2.Text = cmb.ButtonText2.Trim(); } else { Button2.Visible = false; }
-            if (!string.IsNullOrEmpty(cmb.ButtonText3)) { Button3.Visible = true; Button3.Text = cmb.ButtonText3.Trim(); } else { Button3.Visible = false; }
-            if (!string.IsNullOrEmpty(cmb.ButtonText4)) { Button4.Visible = true; Button4.Text = cmb.ButtonText4.Trim(); } else { Button4.Visible = false; }
-            if (!string.IsNullOrEmpty(cmb.ButtonText5)) { Button5.Visible = true; Button5.Text = cmb.ButtonText5.Trim(); } else { Button5.Visible = false; }
-            if (!string.IsNullOrEmpty(cmb.ButtonText6)) { Button6.Visible = true; Button6.Text = cmb.ButtonText6.Trim(); } else { Button6.Visible = false; }
+            txtTitle.Text   = _custMsgBox.Title.Trim();
+            txtMessage.Text = _custMsgBox.Message.Trim();
 
+            SetButtonVisibilityAndText(Button1, _custMsgBox.ButtonText1);
+            SetButtonVisibilityAndText(Button2, _custMsgBox.ButtonText2);
+            SetButtonVisibilityAndText(Button3, _custMsgBox.ButtonText3);
+            SetButtonVisibilityAndText(Button4, _custMsgBox.ButtonText4);
+            SetButtonVisibilityAndText(Button5, _custMsgBox.ButtonText5);
+            SetButtonVisibilityAndText(Button6, _custMsgBox.ButtonText6);
 
-            if (cmb.Icon == 1) { picbxIcon.Image = Properties.Resources.info; }
-            if (cmb.Icon == 2) { picbxIcon.Image = Properties.Resources.Warning; }
-            if (cmb.Icon == 3) { picbxIcon.Image = Properties.Resources.Error; }
-            if (cmb.Icon == 4) { picbxIcon.Image = Properties.Resources.Misc; }
+            SetIcon();
+            Button1.Focus();
+        }
+
+        private void SetButtonVisibilityAndText(Button button, string buttonText)
+        {
+            button.Visible = !string.IsNullOrEmpty(buttonText);
+            button.Text = buttonText?.Trim() ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Set the icon to display
+        /// </summary>
+        private void SetIcon()
+        {
+            switch (_custMsgBox.Icon)
+            {
+                case (int)MessageBoxIcon.Information:
+                    picbxIcon.Image = Properties.Resources.info;
+                    break;
+                case (int)MessageBoxIcon.Warning:
+                    picbxIcon.Image = Properties.Resources.Warning;
+                    break;
+                case (int)MessageBoxIcon.Error:
+                    picbxIcon.Image = Properties.Resources.Error;
+                    break;
+                case (int)MessageBoxIcon.Question:
+                    picbxIcon.Image = Properties.Resources.Misc;
+                    break;
+            }
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            Result =  1;
-            this.Close();   
+            Result = 1;
+            this.Close();
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -94,7 +112,7 @@ namespace AIPrompts.Forms
             this.Close();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void Button6_Click(object sender, EventArgs e)
         {
             Result = 6;
             this.Close();

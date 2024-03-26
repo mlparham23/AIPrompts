@@ -132,8 +132,8 @@ namespace AIPrompts
         /// <param name="e"></param>
         private void btnAIImagesAdd_Click(object sender, EventArgs e)
         {
-            string _message = "AI Image/Add";
-            NotWorkingMessage(_message);
+            AddImagePrompt _imagePrompt = new AddImagePrompt(); // Create new form for image maintenance
+            _imagePrompt.Show();
         }
 
         /// <summary>
@@ -187,8 +187,8 @@ namespace AIPrompts
         /// <param name="e"></param>
         private void btnAIChatMaintenance_Click(object sender, EventArgs e)
         {
-            string _message = "AI Chat/Maintenance";
-            NotWorkingMessage(_message);
+            GPTMaint _maintGPT = new GPTMaint(); // Create new form for Add Chat
+            _maintGPT.Show();
         }
 
         #endregion

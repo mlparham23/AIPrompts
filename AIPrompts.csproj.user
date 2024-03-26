@@ -4,6 +4,12 @@
     <Compile Update="Forms\AddChat.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Forms\AddImagePrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\GPTMaint.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\ImageMaintMain.cs">
       <SubType>Form</SubType>
     </Compile>
