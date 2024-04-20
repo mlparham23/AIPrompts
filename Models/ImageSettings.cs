@@ -13,12 +13,10 @@ namespace AIPrompts.Models
         [Key] public int      setID                       { get; set; }
               public int      seed                        { get; set; } = -1;
               public int      CGFScale                    { get; set; } = 0;
-              public string   imageMode                   { get; set; } = "";
-              public string   imageSize                   { get; set; } = "";
+              public string   imageAspectRatio            { get; set; } = "";
               public int      promptID                    { get; set; }
-              public int      modelID                     { get; set; }
-              public int      steps                       { get; set; }
-              public int      scheduler                   { get; set; }
+              public int      steps                       { get; set; } = 0;
+              public int      scheduler                   { get; set; } = 0;
               public int      DPMSolverGuidanceScale      { get; set; } = 4;
               public int      DPMSolverInterferenceSteps  { get; set; } = 14;
               public int      SASolverGuidanceScale       { get; set; } = 3;

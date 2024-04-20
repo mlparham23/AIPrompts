@@ -22,7 +22,8 @@ namespace AIPrompts.Models
     public class ImagePrompt
     {
        [Key] public int       promptID        { get; set; }
-             public string    promptName      { get; set; } = null!;
+             public string    prompt          { get; set; } = null!; 
+             public string    promptTitle     { get; set; } = null!;
              public string    notes           { get; set; } = "";
              public string    negativePrompt  { get; set; } = "";
              public int       rating          { get; set; } = 0;

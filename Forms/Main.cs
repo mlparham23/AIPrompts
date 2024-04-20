@@ -8,7 +8,14 @@ namespace AIPrompts
     public partial class Main : Form
     {
         #region Class variables
-
+        CustMsgBox  CustMsgBox  = new CustMsgBox();
+        string      title       = "";  // message, title, icon, button...
+        string      message     = "";
+        string      errMessage  = "";
+        string      rank        = "";
+        string      temp        = "";
+        string      result      = "";
+        int         cmresult    = 0;
 
         #endregion
 
@@ -176,6 +183,20 @@ namespace AIPrompts
         /// <param name="e"></param>
         private void btnAIChatSearch_Click(object sender, EventArgs e)
         {
+            //  Variables
+            title = "Testing The User Box";    // message, title, icon, button...
+            message = "Jack and jill were Users";
+            errMessage = "System Error";
+            //string rank = txtRank.Text.Trim();
+            //string temp = "";
+            //string result = "Good";
+            int cmresult = 0;
+
+            cmresult = ShowMsgBox(title, message, (int)_icon.Error, "OK","Not OK","Alfred","","","",errMessage);
+            message = cmresult.ToString();
+
+
+
             string _message = "AI Chat/Search";
             NotWorkingMessage(_message);
         }
@@ -214,10 +235,72 @@ namespace AIPrompts
             MessageBox.Show(_message + " is not currently set up.");
         }
 
+        /// <summary>
+        /// Display Custom Message Box
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="message"></param>
+        /// <param name="icon"></param>
+        /// <param name="buttonText1"></param>
+        /// <param name="buttonText2"></param>
+        /// <param name="systemMessage"></param>
+        private int ShowMsgBox(string title, string message, int icon, string buttonText1, string buttonText2 = "",
+                string buttonText3 = "", string buttonText4 = "", string buttonText5 = "", string buttonText6 = "",
+                string systemMessage = "")
+        {
+            int result = 0;
+
+            CustMsgBox custMsgBox = new CustMsgBox
+            {
+                Title = title,
+                Message = message,
+                SystemMessage = systemMessage.Trim(),
+                ButtonText1 = buttonText1,
+                ButtonText2 = buttonText2,
+                ButtonText3 = buttonText3,
+                ButtonText4 = buttonText4,
+                ButtonText5 = buttonText5,
+                ButtonText6 = buttonText6,
+
+
+                Icon = (int)icon
+            };
+
+            if (string.IsNullOrEmpty(custMsgBox.SystemMessage))
+            {
+                // Standard Message Box
+                MsgBoxUser cMsgBox = new MsgBoxUser(custMsgBox);
+                cMsgBox.ShowDialog();
+                result = (int)cMsgBox.Result;
+                return result;
+            }
+            else
+            {
+                //  System Error Message Box
+                MsgBoxSystem cMsgBox = new MsgBoxSystem(custMsgBox);
+                cMsgBox.ShowDialog();
+                result = (int)cMsgBox.Result;
+                return result;
+            }
+        }
 
         #endregion
 
+        #region enums
 
+        /// <summary>
+        /// Enum: Icon  Custom Messagebox Icons
+        /// </summary>
+        public enum _icon
+        {
+            Information = 1,
+            Question    = 2,
+            Warning     = 3,
+            Error       = 4,
+            Misc        = 5
+        }
+
+        #endregion
 
 
 

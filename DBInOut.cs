@@ -6,6 +6,8 @@ using Microsoft.Data.SqlClient;
 using AIPrompts.Forms;
 using System.Windows.Forms;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Identity.Client;
+using System.ComponentModel.DataAnnotations;
 
 namespace AIPrompts
 {
@@ -301,9 +303,304 @@ namespace AIPrompts
                 ShowMsgBox("DB Delete GPT Category - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
             }
         }
-        #endregion
 
+        #endregion
         #region AI Image
+
+        /// <summary>
+        /// Check for duplicate AI Image Prompt before posting
+        /// </summary>
+        /// <param name="prompt"></param>
+        /// <returns></returns>
+        public string checkAIImagePromptExists(ImagePrompt prompt)
+        {
+            string result = "";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT COUNT(*) FROM AIImagePrompts WHERE Prompt = @Prompt";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Prompt", prompt.prompt);
+
+                connection.Open();
+                int count = (int)command.ExecuteScalar();
+                if (count > 0)
+                {
+                    result = "Error: Already Exists";
+                }
+                else
+                {
+                    result = "Good to Proceed";
+                }
+                
+                connection.Close();
+                return result;
+            }
+        }            
+
+        /// <summary>
+        /// Post AI Image Prompt
+        /// </summary>
+        /// <param name="prompt"></param>
+        /// <returns></returns>
+        public int AddAIImagePrompt(ImagePrompt prompt)
+        {
+            int primeKey = -1;
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                { 
+                    string query = $"INSERT INTO AIImagePrompts (PromptTitle, Prompt, NegativePrompt, Notes, Rating) VALUES (@promptTitle, @prompt, @negativePrompt, @notes, @rating)";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@promptTitle",     prompt.promptTitle);
+                        command.Parameters.AddWithValue("@prompt",          prompt.prompt);
+                        command.Parameters.AddWithValue("@negativePrompt",  prompt.negativePrompt);
+                        command.Parameters.AddWithValue("@notes",           prompt.notes);
+                        command.Parameters.AddWithValue("@rating",          prompt.rating);
+
+                        connection.Open();
+                        primeKey = Convert.ToInt32(command.ExecuteScalar());
+                        connection.Close();
+
+                        query = @"SELECT PromptID FROM AIImagePrompts WHERE PromptTitle = @PromptTitle AND Rating = @Rating AND Prompt = @Prompt";
+                        SqlCommand command1 = new SqlCommand(query, connection);
+                        command1.Parameters.AddWithValue("@PromptTitle",    prompt.promptTitle);
+                        command1.Parameters.AddWithValue("@Rating",         prompt.rating);
+                        command1.Parameters.AddWithValue("@Prompt",         prompt.prompt);
+                        connection.Open();
+                        var result = command1.ExecuteScalar();
+                        if (result != null && result != DBNull.Value)
+                        {
+                            primeKey = Convert.ToInt32(result);
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                message = "Failed to add AI Image prompt.\r\n\r\n";
+                message += "Prompt Title:  " + prompt.promptTitle;
+                ShowMsgBox("DB Add GPT Prompt - Failed", message, (int)_icon.Error, "OK", "", ex.Message.ToString());
+            }
+
+            return primeKey;
+        }
+
+        /// <summary>
+        /// Add to CategoryBridge during add Prompt
+        /// </summary>
+        /// <param name="prompt"></param>
+        /// <param name="cat"></param>
+        public void addAIImageCategory(int prompt, List<ImageCategory> cat)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("INSERT INTO AIImageCategoryBridge (PromptID, CatID) VALUES (@PromptID, @CatID)", connection))
+                {
+                    command.Parameters.Add("@PromptID", System.Data.SqlDbType.Int);
+                    command.Parameters.Add("@CatID",    System.Data.SqlDbType.Int);
+
+                    foreach (var item in cat)
+                    {
+                        command.Parameters["@PromptID"].Value   = prompt;
+                        command.Parameters["@CatID"].Value      = item.catID;
+
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            message = "Failed to add to Category Bridge.\r\n\r\n";
+                            message += "Category:  " + item.category;
+                            ShowMsgBox("DB Add Category  - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Add to Style Bridge during add image prompt
+        /// </summary>
+        /// <param name="prompt"></param>
+        /// <param name="styles"></param>
+        public void addAIImageStyle(int prompt, List<ImageStyle> styles)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("INSERT INTO AIImageStyleBridge (StyleID, PromptID) VALUES (@StyleID, @PromptID)", connection))
+                {
+                    command.Parameters.Add("@StyleID", System.Data.SqlDbType.Int);
+                    command.Parameters.Add("@PromptID", System.Data.SqlDbType.Int);
+
+                    foreach (var item in styles)
+                    {
+                        command.Parameters["@StyleID"].Value = item.styleID;
+                        command.Parameters["@PromptID"].Value = prompt;
+
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            message = "Failed to add to Style Table.\r\n\r\n";
+                            message += "Style:  " + item.styleName;
+                            ShowMsgBox("DB Add Style Name  - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Add to Lora Bridge during add image prompt
+        /// </summary>
+        /// <param name="prompt"></param>
+        /// <param name="l"></param>
+        public void addAIImageLora(int prompt, List<ImageLora> l)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("INSERT INTO AIImageLoraBridge (PromptID, LoraID) VALUES (@PromptID, @LoraID)", connection))
+                {
+                    command.Parameters.Add("@PromptID", System.Data.SqlDbType.Int);
+                    command.Parameters.Add("@LoraID", System.Data.SqlDbType.Int);
+
+                    foreach (var item in l)
+                    {
+                        command.Parameters["@PromptID"].Value = prompt;
+                        command.Parameters["@LoraID"].Value = item.loraID;
+
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            message = "Failed to add to Lora Bridge.\r\n\r\n";
+                            message += "Category:  " + item.lora;
+                            ShowMsgBox("DB Add Lora Bridge  - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Add to Model Bridge during add image prompt
+        /// </summary>
+        /// <param name="prompt"></param>
+        /// <param name="m"></param>
+        public void addAIImageModel(int prompt, List<ImageModel> m)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("INSERT INTO AIImageModelBridge (PromptID, ModelID) VALUES (@PromptID, @ModelID)", connection))
+                {
+                    command.Parameters.Add("@PromptID", System.Data.SqlDbType.Int);
+                    command.Parameters.Add("@ModelID",  System.Data.SqlDbType.Int);
+
+                    foreach (var item in m)
+                    {
+                        command.Parameters["@PromptID"].Value   = prompt;
+                        command.Parameters["@ModelID"].Value    = item.modelID;
+
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            message = "Failed to add to Model Bridge.\r\n\r\n";
+                            message += "Category:  " + item.modelName;
+                            ShowMsgBox("DB Add Model Bridge  - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                        }
+                    }
+                }
+            }
+        }
+
+        public void addAIImageSite(int PromptID, ImagePrompt prompt, List<ImageSite> s)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("INSERT INTO AIImageSiteBridge (SiteID, PromptID, Rank, Note) VALUES (@SiteID, @PromptID, @Rank, @Note)", connection))
+                {
+                    command.Parameters.Add("@SiteID", System.Data.SqlDbType.Int);
+                    command.Parameters.Add("@PromptID", System.Data.SqlDbType.Int);
+                    command.Parameters.Add("@Rank", System.Data.SqlDbType.Int);
+                    command.Parameters.Add("@Note", System.Data.SqlDbType.VarChar);
+
+                    foreach (var item in s)
+                    {
+                        command.Parameters["@SiteID"].Value = item.siteID;
+                        command.Parameters["@PromptID"].Value = PromptID;
+                        command.Parameters["@Rank"].Value = prompt.rating;
+                        command.Parameters["@Note"].Value = prompt.notes;
+
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            message = "Failed to add to Site Bridge.\r\n\r\n";
+                            message += "Site:  " + item.siteName;
+                            ShowMsgBox("DB Add Site Bridge  - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Add AI Image Settings
+        /// </summary>
+        /// <param name="promptID"></param>
+        /// <param name="settings"></param>
+        public void AddAISettings(int promptID, ImageSettings settings)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("INSERT INTO AIImageSettings (Seed, CFGScale, ImageAspectRatio, PromptID, Steps, Scheduler, SamplingMethod, Tags, DPMSolverGuidanceScale, DPMSolverInterferenceSteps, SASolverGuidanceScale, SASolverInterferenceSteps) " +
+                                                            "VALUES (@Seed, @CFGScale, @ImageAspectRatio, @PromptID, @Steps, @Scheduler, @SamplingMethod, @Tags, @DPMSolverGuidanceScale, @DPMSolverInterferenceSteps, @SASolverGuidanceScale, @SASolverInterferenceSteps)", connection))
+                {
+                    command.Parameters.Add("@Seed",                         System.Data.SqlDbType.Int).Value           = settings.seed;
+                    command.Parameters.Add("@CFGScale",                     System.Data.SqlDbType.Int).Value           = settings.CGFScale;
+                    command.Parameters.Add("@ImageAspectRatio",             System.Data.SqlDbType.NVarChar, 50).Value  = settings.imageAspectRatio;
+                    command.Parameters.Add("@PromptID",                     System.Data.SqlDbType.Int).Value           = promptID;
+                    command.Parameters.Add("@Steps",                        System.Data.SqlDbType.Int).Value           = settings.steps;
+                    command.Parameters.Add("@Scheduler",                    System.Data.SqlDbType.Int).Value           = settings.scheduler;
+                    command.Parameters.Add("@SamplingMethod",               System.Data.SqlDbType.NVarChar, 50).Value  = settings.samplingMethod;
+                    command.Parameters.Add("@Tags",                         System.Data.SqlDbType.NVarChar, 200).Value = settings.tags;
+                    command.Parameters.Add("@DPMSolverGuidanceScale",            System.Data.SqlDbType.Int).Value           = settings.DPMSolverGuidanceScale;
+                    command.Parameters.Add("@DPMSolverInterferenceSteps",   System.Data.SqlDbType.Int).Value           = settings.DPMSolverInterferenceSteps;
+                    command.Parameters.Add("@SASolverGuidanceScale",        System.Data.SqlDbType.Int).Value           = settings.SASolverGuidanceScale;
+                    command.Parameters.Add("@SASolverInterferenceSteps",     System.Data.SqlDbType.Int).Value           = settings.SASolverInterferenceSteps;
+
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error inserting settings for model:");
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Get all Chat Categories in ascending order
@@ -395,6 +692,49 @@ namespace AIPrompts
             }
 
             return sites;
+        }
+
+        /// <summary>
+        /// Get all Chat Categories in ascending order
+        /// </summary>
+        /// <returns></returns>
+        public List<ImageStyle> getAllStyles()
+        {
+            //  Variables
+            List<ImageStyle> st = new List<ImageStyle>();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string sql = "SELECT * FROM AIImageStyle Order by Style";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ImageStyle m = new ImageStyle();
+                                {
+                                    m.styleID       = reader.GetInt32(reader.GetOrdinal("StyleID"));
+                                    m.styleName     = reader.GetString(reader.GetOrdinal("Style"));
+                                    m.notes         = reader.GetString(reader.GetOrdinal("Notes"));
+                                    m.createdDate   = reader.GetDateTime(reader.GetOrdinal("CreateDate"));
+                                }
+                                st.Add(m);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string message = "Failed to load AI Image Styles.";
+                ShowMsgBox("DB Get AI Image Styles - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+            }
+
+            return st;
         }
 
         /// <summary>

@@ -12,6 +12,7 @@ namespace AIPrompts.Models
     {
        [Key] public int      modelID     { get; set; }
              public string   modelName   { get; set; } = null!;
+             public bool     NSFW        { get; set; } = false;
              public string   notes       { get; set; } = "";
 
              [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -65,19 +65,24 @@ namespace AIPrompts.Forms
         /// </summary>
         private void SetIcon()
         {
-            switch (_custMsgBox.Icon)
+            int icon = _custMsgBox.Icon;
+
+            switch (icon)
             {
-                case (int)MessageBoxIcon.Information:
-                    picbxIcon.Image = Properties.Resources.info;
+                case 1:
+                    picbxIcon.Image = Properties.Resources.Information_512;
                     break;
-                case (int)MessageBoxIcon.Warning:
-                    picbxIcon.Image = Properties.Resources.Warning;
+                case 2:
+                    picbxIcon.Image = Properties.Resources.Question_512;
                     break;
-                case (int)MessageBoxIcon.Error:
-                    picbxIcon.Image = Properties.Resources.Error;
+                case 3:
+                    picbxIcon.Image = Properties.Resources.Warning_512;
                     break;
-                case (int)MessageBoxIcon.Question:
-                    picbxIcon.Image = Properties.Resources.Misc;
+                case 4:
+                    picbxIcon.Image = Properties.Resources.Error_512;
+                    break;
+                default:
+                    picbxIcon.Image = Properties.Resources.Misc_512;
                     break;
             }
         }
@@ -128,9 +133,10 @@ namespace AIPrompts.Forms
         public enum _icon
         {
             Information = 1,
-            Warning = 2,
-            Error = 3,
-            Misc = 4
+            Question    = 2,
+            Warning     = 3,
+            Error       = 4,
+            Misc        = 5
         }
 
         #endregion

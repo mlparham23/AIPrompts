@@ -259,7 +259,7 @@ namespace AIPrompts.Forms
             CustMsgBox.Title        = "Add GPT Prompt - Check Inputs";
             CustMsgBox.Message      = "Add GPT Prompt is not currently set up.";
             CustMsgBox.ButtonText1  = "OK";
-            CustMsgBox.Icon = (int)_icon.Error;
+            CustMsgBox.Icon = (int)_icon.Question;
 
             //  Check the data
             //      Prompt Title
@@ -556,9 +556,10 @@ namespace AIPrompts.Forms
         public enum _icon
         {
             Information = 1,
-            Warning = 2,
-            Error = 3,
-            Misc = 4
+            Question    = 2,
+            Warning     = 3,
+            Error       = 4,
+            Misc        = 5
         }
 
         #endregion

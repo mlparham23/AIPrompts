@@ -42,7 +42,7 @@
             // 
             // picbxIcon
             // 
-            picbxIcon.Image = Properties.Resources.Misc;
+            picbxIcon.Image = Properties.Resources.Warning_512;
             picbxIcon.Location = new Point(12, 12);
             picbxIcon.Name = "picbxIcon";
             picbxIcon.Size = new Size(127, 117);
@@ -125,7 +125,7 @@
             // txtMessage
             // 
             txtMessage.BackColor = SystemColors.MenuBar;
-            txtMessage.Font = new Font("Courier New", 12F);
+            txtMessage.Font = new Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtMessage.Location = new Point(12, 135);
             txtMessage.Name = "txtMessage";
             txtMessage.ReadOnly = true;

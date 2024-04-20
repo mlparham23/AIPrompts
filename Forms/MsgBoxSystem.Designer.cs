@@ -45,7 +45,7 @@
             // 
             // picbxIcon
             // 
-            picbxIcon.Image = Properties.Resources.Misc;
+            picbxIcon.Image = Properties.Resources.Error_512;
             picbxIcon.Location = new Point(12, 12);
             picbxIcon.Name = "picbxIcon";
             picbxIcon.Size = new Size(127, 117);
@@ -140,7 +140,7 @@
             // txtMessage
             // 
             txtMessage.BackColor = SystemColors.MenuBar;
-            txtMessage.Font = new Font("Courier New", 12F);
+            txtMessage.Font = new Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtMessage.Location = new Point(12, 157);
             txtMessage.Name = "txtMessage";
             txtMessage.ReadOnly = true;
@@ -161,6 +161,7 @@
             // txtSystem
             // 
             txtSystem.BackColor = SystemColors.MenuBar;
+            txtSystem.Font = new Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtSystem.Location = new Point(12, 314);
             txtSystem.Multiline = true;
             txtSystem.Name = "txtSystem";
@@ -198,6 +199,7 @@
             Controls.Add(picbxIcon);
             Name = "MsgBoxSystem";
             Text = "MsgBoxSystem";
+            Load += MsgBoxSystem_Load;
             ((System.ComponentModel.ISupportInitialize)picbxIcon).EndInit();
             ResumeLayout(false);
             PerformLayout();

@@ -602,9 +602,10 @@ namespace AIPrompts.Forms
         public enum _icon
         {
             Information = 1,
-            Warning = 2,
-            Error = 3,
-            Misc = 4
+            Question    = 2,
+            Warning     = 3,
+            Error       = 4,
+            Misc        = 5
         }
 
         #endregion

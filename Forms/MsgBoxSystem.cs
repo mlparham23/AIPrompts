@@ -21,12 +21,13 @@ namespace AIPrompts.Forms
 
         #region Form
 
+
         /// <summary>
         /// Populate the form
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MsgBoxUser_Load(object sender, EventArgs e)
+        private void MsgBoxSystem_Load(object sender, EventArgs e)
         {
             PopulateForm();
         }
@@ -53,21 +54,6 @@ namespace AIPrompts.Forms
 
             SetIcon();
             Button1.Focus();
-
-
-
-            //if (!string.IsNullOrEmpty(_custMsgBox.ButtonText1)) { Button1.Visible = true; Button1.Text = cmb.ButtonText1.Trim(); } else { Button1.Visible = false; }
-            //if (!string.IsNullOrEmpty(_custMsgBox.ButtonText2)) { Button2.Visible = true; Button2.Text = cmb.ButtonText2.Trim(); } else { Button2.Visible = false; }
-            //if (!string.IsNullOrEmpty(cmb.ButtonText3)) { Button3.Visible = true; Button3.Text = cmb.ButtonText3.Trim(); } else { Button3.Visible = false; }
-            //if (!string.IsNullOrEmpty(cmb.ButtonText4)) { Button4.Visible = true; Button4.Text = cmb.ButtonText4.Trim(); } else { Button4.Visible = false; }
-            //if (!string.IsNullOrEmpty(cmb.ButtonText5)) { Button5.Visible = true; Button5.Text = cmb.ButtonText5.Trim(); } else { Button5.Visible = false; }
-            //if (!string.IsNullOrEmpty(cmb.ButtonText6)) { Button6.Visible = true; Button6.Text = cmb.ButtonText6.Trim(); } else { Button6.Visible = false; }
-
-
-            //if (cmb.Icon == 1) { picbxIcon.Image = Properties.Resources.info; }
-            //if (cmb.Icon == 2) { picbxIcon.Image = Properties.Resources.Warning; }
-            //if (cmb.Icon == 3) { picbxIcon.Image = Properties.Resources.Error; }
-            //if (cmb.Icon == 4) { picbxIcon.Image = Properties.Resources.Misc; }
         }
 
         private void SetButtonVisibilityAndText(Button button, string buttonText)
@@ -81,59 +67,27 @@ namespace AIPrompts.Forms
         /// </summary>
         private void SetIcon()
         {
-            switch (_custMsgBox.Icon)
+            int icon = _custMsgBox.Icon;
+
+            switch (icon)
             {
-                case (int)MessageBoxIcon.Information:
-                    picbxIcon.Image = Properties.Resources.info;
+                case 1:
+                    picbxIcon.Image = Properties.Resources.Information_512;
                     break;
-                case (int)MessageBoxIcon.Warning:
-                    picbxIcon.Image = Properties.Resources.Warning;
+                case 2:
+                    picbxIcon.Image = Properties.Resources.Question_512;
                     break;
-                case (int)MessageBoxIcon.Error:
-                    picbxIcon.Image = Properties.Resources.Error;
+                case 3:
+                    picbxIcon.Image = Properties.Resources.Warning_512;
                     break;
-                case (int)MessageBoxIcon.Question:
-                    picbxIcon.Image = Properties.Resources.Misc;
+                case 4:
+                    picbxIcon.Image = Properties.Resources.Error_512;
+                    break;
+                default:
+                    picbxIcon.Image = Properties.Resources.Misc_512;
                     break;
             }
         }
-
-
-        //private void Button1_Click(object sender, EventArgs e)
-        //{
-        //    Result = 1;
-        //    this.Close();
-        //}
-
-        //private void Button2_Click(object sender, EventArgs e)
-        //{
-        //    Result = 2;
-        //    this.Close();
-        //}
-
-        //private void Button3_Click(object sender, EventArgs e)
-        //{
-        //    Result = 3;
-        //    this.Close();
-        //}
-
-        //private void Button4_Click(object sender, EventArgs e)
-        //{
-        //    Result = 4;
-        //    this.Close();
-        //}
-
-        //private void Button5_Click(object sender, EventArgs e)
-        //{
-        //    Result = 5;
-        //    this.Close();
-        //}
-
-        //private void button6_Click(object sender, EventArgs e)
-        //{
-        //    Result = 6;
-        //    this.Close();
-        //}
 
         private void Button1_Click_1(object sender, EventArgs e)
         {
@@ -181,9 +135,10 @@ namespace AIPrompts.Forms
         public enum _icon
         {
             Information = 1,
-            Warning = 2,
-            Error = 3,
-            Misc = 4
+            Question    = 2,
+            Warning     = 3,
+            Error       = 4,
+            Misc        = 5
         }
 
         #endregion

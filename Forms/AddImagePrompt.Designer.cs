@@ -37,6 +37,9 @@
             mnustrpFunctionClearScreen = new ToolStripMenuItem();
             mnustrpFunctionRefreshScreen = new ToolStripMenuItem();
             grpbxPrompt = new GroupBox();
+            txtTitle = new TextBox();
+            lblTitle = new Label();
+            label25 = new Label();
             txtNotes = new TextBox();
             txtNegPrompt = new TextBox();
             txtPrompt = new TextBox();
@@ -51,8 +54,8 @@
             grpbxLoras = new GroupBox();
             cklstbxModels = new CheckedListBox();
             grpbxModels = new GroupBox();
-            cklstbxCategories = new CheckedListBox();
-            grpbxCategories = new GroupBox();
+            cklstbxStyles = new CheckedListBox();
+            grpbxStyles = new GroupBox();
             btnAdd = new Button();
             btnClear = new Button();
             btnRefresh = new Button();
@@ -66,7 +69,7 @@
             label19 = new Label();
             label18 = new Label();
             label17 = new Label();
-            textBox1 = new TextBox();
+            txtCFGScale = new TextBox();
             label16 = new Label();
             label15 = new Label();
             label14 = new Label();
@@ -92,13 +95,16 @@
             txtSeed = new TextBox();
             label1 = new Label();
             cboAspectRatio = new ComboBox();
+            cklstbxCategories = new CheckedListBox();
+            grpbxCategories = new GroupBox();
             mnustrp.SuspendLayout();
             grpbxPrompt.SuspendLayout();
             grpbxSites.SuspendLayout();
             grpbxLoras.SuspendLayout();
             grpbxModels.SuspendLayout();
-            grpbxCategories.SuspendLayout();
+            grpbxStyles.SuspendLayout();
             grpbxSettings.SuspendLayout();
+            grpbxCategories.SuspendLayout();
             SuspendLayout();
             // 
             // mnustrp
@@ -106,7 +112,7 @@
             mnustrp.Items.AddRange(new ToolStripItem[] { mnustrpFile, addPromptToolStripMenuItem, mnustrpFunction });
             mnustrp.Location = new Point(0, 0);
             mnustrp.Name = "mnustrp";
-            mnustrp.Size = new Size(1413, 24);
+            mnustrp.Size = new Size(1637, 24);
             mnustrp.TabIndex = 0;
             mnustrp.Text = "menuStrip1";
             // 
@@ -158,6 +164,9 @@
             // 
             // grpbxPrompt
             // 
+            grpbxPrompt.Controls.Add(txtTitle);
+            grpbxPrompt.Controls.Add(lblTitle);
+            grpbxPrompt.Controls.Add(label25);
             grpbxPrompt.Controls.Add(txtNotes);
             grpbxPrompt.Controls.Add(txtNegPrompt);
             grpbxPrompt.Controls.Add(txtPrompt);
@@ -172,6 +181,33 @@
             grpbxPrompt.TabIndex = 1;
             grpbxPrompt.TabStop = false;
             grpbxPrompt.Text = "Prompt";
+            // 
+            // txtTitle
+            // 
+            txtTitle.Location = new Point(166, 16);
+            txtTitle.MaxLength = 50;
+            txtTitle.Name = "txtTitle";
+            txtTitle.ScrollBars = ScrollBars.Vertical;
+            txtTitle.Size = new Size(283, 23);
+            txtTitle.TabIndex = 45;
+            // 
+            // lblTitle
+            // 
+            lblTitle.AutoSize = true;
+            lblTitle.Location = new Point(131, 19);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(29, 15);
+            lblTitle.TabIndex = 44;
+            lblTitle.Text = "Title";
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Location = new Point(4, 19);
+            label25.Name = "label25";
+            label25.Size = new Size(36, 15);
+            label25.TabIndex = 43;
+            label25.Text = "0 - 10";
             // 
             // txtNotes
             // 
@@ -204,7 +240,7 @@
             // 
             txtRating.Location = new Point(84, 16);
             txtRating.Name = "txtRating";
-            txtRating.Size = new Size(56, 23);
+            txtRating.Size = new Size(45, 23);
             txtRating.TabIndex = 4;
             txtRating.TextAlign = HorizontalAlignment.Center;
             // 
@@ -298,23 +334,23 @@
             grpbxModels.TabStop = false;
             grpbxModels.Text = "Models Used";
             // 
-            // cklstbxCategories
+            // cklstbxStyles
             // 
-            cklstbxCategories.FormattingEnabled = true;
-            cklstbxCategories.Location = new Point(6, 22);
-            cklstbxCategories.Name = "cklstbxCategories";
-            cklstbxCategories.Size = new Size(213, 508);
-            cklstbxCategories.TabIndex = 0;
+            cklstbxStyles.FormattingEnabled = true;
+            cklstbxStyles.Location = new Point(6, 22);
+            cklstbxStyles.Name = "cklstbxStyles";
+            cklstbxStyles.Size = new Size(213, 508);
+            cklstbxStyles.TabIndex = 0;
             // 
-            // grpbxCategories
+            // grpbxStyles
             // 
-            grpbxCategories.Controls.Add(cklstbxCategories);
-            grpbxCategories.Location = new Point(1174, 27);
-            grpbxCategories.Name = "grpbxCategories";
-            grpbxCategories.Size = new Size(225, 539);
-            grpbxCategories.TabIndex = 5;
-            grpbxCategories.TabStop = false;
-            grpbxCategories.Text = "Categories";
+            grpbxStyles.Controls.Add(cklstbxStyles);
+            grpbxStyles.Location = new Point(1405, 27);
+            grpbxStyles.Name = "grpbxStyles";
+            grpbxStyles.Size = new Size(225, 539);
+            grpbxStyles.TabIndex = 5;
+            grpbxStyles.TabStop = false;
+            grpbxStyles.Text = "Styles";
             // 
             // btnAdd
             // 
@@ -374,7 +410,7 @@
             grpbxSettings.Controls.Add(label19);
             grpbxSettings.Controls.Add(label18);
             grpbxSettings.Controls.Add(label17);
-            grpbxSettings.Controls.Add(textBox1);
+            grpbxSettings.Controls.Add(txtCFGScale);
             grpbxSettings.Controls.Add(label16);
             grpbxSettings.Controls.Add(label15);
             grpbxSettings.Controls.Add(label14);
@@ -479,13 +515,13 @@
             label17.TabIndex = 35;
             label17.Text = "1 - 12";
             // 
-            // textBox1
+            // txtCFGScale
             // 
-            textBox1.Location = new Point(207, 59);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(80, 23);
-            textBox1.TabIndex = 34;
-            textBox1.TextAlign = HorizontalAlignment.Center;
+            txtCFGScale.Location = new Point(207, 59);
+            txtCFGScale.Name = "txtCFGScale";
+            txtCFGScale.Size = new Size(80, 23);
+            txtCFGScale.TabIndex = 34;
+            txtCFGScale.TextAlign = HorizontalAlignment.Center;
             // 
             // label16
             // 
@@ -703,17 +739,36 @@
             cboAspectRatio.Size = new Size(109, 23);
             cboAspectRatio.TabIndex = 0;
             // 
+            // cklstbxCategories
+            // 
+            cklstbxCategories.FormattingEnabled = true;
+            cklstbxCategories.Location = new Point(6, 22);
+            cklstbxCategories.Name = "cklstbxCategories";
+            cklstbxCategories.Size = new Size(213, 508);
+            cklstbxCategories.TabIndex = 0;
+            // 
+            // grpbxCategories
+            // 
+            grpbxCategories.Controls.Add(cklstbxCategories);
+            grpbxCategories.Location = new Point(1174, 27);
+            grpbxCategories.Name = "grpbxCategories";
+            grpbxCategories.Size = new Size(225, 539);
+            grpbxCategories.TabIndex = 6;
+            grpbxCategories.TabStop = false;
+            grpbxCategories.Text = "Categories";
+            // 
             // AddImagePrompt
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1413, 758);
+            ClientSize = new Size(1637, 758);
+            Controls.Add(grpbxCategories);
+            Controls.Add(grpbxStyles);
             Controls.Add(grpbxSettings);
             Controls.Add(btnExit);
             Controls.Add(btnRefresh);
             Controls.Add(btnClear);
             Controls.Add(btnAdd);
-            Controls.Add(grpbxCategories);
             Controls.Add(grpbxModels);
             Controls.Add(grpbxLoras);
             Controls.Add(grpbxSites);
@@ -729,9 +784,10 @@
             grpbxSites.ResumeLayout(false);
             grpbxLoras.ResumeLayout(false);
             grpbxModels.ResumeLayout(false);
-            grpbxCategories.ResumeLayout(false);
+            grpbxStyles.ResumeLayout(false);
             grpbxSettings.ResumeLayout(false);
             grpbxSettings.PerformLayout();
+            grpbxCategories.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -754,8 +810,8 @@
         private GroupBox grpbxLoras;
         private CheckedListBox cklstbxModels;
         private GroupBox grpbxModels;
-        private CheckedListBox cklstbxCategories;
-        private GroupBox grpbxCategories;
+        private CheckedListBox cklstbxStyles;
+        private GroupBox grpbxStyles;
         private Button btnAdd;
         private Button btnClear;
         private Button btnRefresh;
@@ -792,7 +848,7 @@
         private Label label9;
         private Label label15;
         private Label label14;
-        private TextBox textBox1;
+        private TextBox txtCFGScale;
         private Label label16;
         private Label label18;
         private Label label17;
@@ -802,5 +858,10 @@
         private Label label23;
         private Label label22;
         private Label label21;
+        private Label label25;
+        private CheckedListBox cklstbxCategories;
+        private GroupBox grpbxCategories;
+        private TextBox txtTitle;
+        private Label lblTitle;
     }
 }
