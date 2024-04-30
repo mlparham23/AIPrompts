@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace AIPrompts.Forms
 {
-    public partial class MsgBoxUser : Form
+    public partial class MsgBoxUser : Form, IDisposable
     {
         #region Startup
 

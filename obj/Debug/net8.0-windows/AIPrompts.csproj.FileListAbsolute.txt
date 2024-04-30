@@ -127,3 +127,4 @@ D:\Dev\AIPrompts\obj\Debug\net8.0-windows\AIPrompts.Properties.Resources.resourc
 D:\Dev\AIPrompts\obj\Debug\net8.0-windows\AIPrompts.Forms.MsgBoxSystem.resources
 D:\Dev\AIPrompts\obj\Debug\net8.0-windows\AIPrompts.Forms.GPTMaint.resources
 D:\Dev\AIPrompts\obj\Debug\net8.0-windows\AIPrompts.Forms.AddImagePrompt.resources
+D:\Dev\AIPrompts\obj\Debug\net8.0-windows\AIPrompts.Forms.SearchImagePrompt.resources

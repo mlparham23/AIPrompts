@@ -103,6 +103,16 @@ namespace AIPrompts.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Mag_8_256 {
+            get {
+                object obj = ResourceManager.GetObject("Mag 8_256", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Misc {
             get {
                 object obj = ResourceManager.GetObject("Misc", resourceCulture);
@@ -126,6 +136,16 @@ namespace AIPrompts.Properties {
         internal static System.Drawing.Bitmap Question_512 {
             get {
                 object obj = ResourceManager.GetObject("Question_512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Recycle_256 {
+            get {
+                object obj = ResourceManager.GetObject("Recycle 256", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

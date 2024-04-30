@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
 namespace AIPrompts.Models
 {
@@ -18,5 +18,19 @@ namespace AIPrompts.Models
         public string ButtonText5   { get; set; } = "";
         public string ButtonText6   { get; set; } = "";
         public int    Icon          { get; set; } = 0;
+
+        public void ResetToDefault()
+        {
+            Title           = "";
+            Message         = "";
+            SystemMessage   = "";
+            ButtonText1     = "";
+            ButtonText2     = "";
+            ButtonText3     = "";
+            ButtonText4     = "";
+            ButtonText5     = "";
+            ButtonText6     = "";
+            Icon            = 0;
+        }
     }
 }

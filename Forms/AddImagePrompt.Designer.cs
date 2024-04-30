@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddImagePrompt));
             mnustrp = new MenuStrip();
             mnustrpFile = new ToolStripMenuItem();
             mnustrpFileExit = new ToolStripMenuItem();
@@ -97,6 +98,11 @@
             cboAspectRatio = new ComboBox();
             cklstbxCategories = new CheckedListBox();
             grpbxCategories = new GroupBox();
+            picbxRefreshSites = new PictureBox();
+            picbxRefreshLoras = new PictureBox();
+            picbxRefreshModels = new PictureBox();
+            picbxRefreshCategories = new PictureBox();
+            picbxRefreshStyles = new PictureBox();
             mnustrp.SuspendLayout();
             grpbxPrompt.SuspendLayout();
             grpbxSites.SuspendLayout();
@@ -105,6 +111,11 @@
             grpbxStyles.SuspendLayout();
             grpbxSettings.SuspendLayout();
             grpbxCategories.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picbxRefreshSites).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picbxRefreshLoras).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picbxRefreshModels).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picbxRefreshCategories).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picbxRefreshStyles).BeginInit();
             SuspendLayout();
             // 
             // mnustrp
@@ -757,11 +768,71 @@
             grpbxCategories.TabStop = false;
             grpbxCategories.Text = "Categories";
             // 
+            // picbxRefreshSites
+            // 
+            picbxRefreshSites.Image = (Image)resources.GetObject("picbxRefreshSites.Image");
+            picbxRefreshSites.Location = new Point(655, 572);
+            picbxRefreshSites.Name = "picbxRefreshSites";
+            picbxRefreshSites.Size = new Size(45, 41);
+            picbxRefreshSites.SizeMode = PictureBoxSizeMode.StretchImage;
+            picbxRefreshSites.TabIndex = 11;
+            picbxRefreshSites.TabStop = false;
+            picbxRefreshSites.Click += picbxRefreshSites_Click;
+            // 
+            // picbxRefreshLoras
+            // 
+            picbxRefreshLoras.Image = (Image)resources.GetObject("picbxRefreshLoras.Image");
+            picbxRefreshLoras.Location = new Point(886, 572);
+            picbxRefreshLoras.Name = "picbxRefreshLoras";
+            picbxRefreshLoras.Size = new Size(45, 41);
+            picbxRefreshLoras.SizeMode = PictureBoxSizeMode.StretchImage;
+            picbxRefreshLoras.TabIndex = 12;
+            picbxRefreshLoras.TabStop = false;
+            picbxRefreshLoras.Click += picbxRefreshLoras_Click;
+            // 
+            // picbxRefreshModels
+            // 
+            picbxRefreshModels.Image = (Image)resources.GetObject("picbxRefreshModels.Image");
+            picbxRefreshModels.Location = new Point(1117, 572);
+            picbxRefreshModels.Name = "picbxRefreshModels";
+            picbxRefreshModels.Size = new Size(45, 41);
+            picbxRefreshModels.SizeMode = PictureBoxSizeMode.StretchImage;
+            picbxRefreshModels.TabIndex = 13;
+            picbxRefreshModels.TabStop = false;
+            picbxRefreshModels.Click += picbxRefreshModels_Click;
+            // 
+            // picbxRefreshCategories
+            // 
+            picbxRefreshCategories.Image = (Image)resources.GetObject("picbxRefreshCategories.Image");
+            picbxRefreshCategories.Location = new Point(1348, 572);
+            picbxRefreshCategories.Name = "picbxRefreshCategories";
+            picbxRefreshCategories.Size = new Size(45, 41);
+            picbxRefreshCategories.SizeMode = PictureBoxSizeMode.StretchImage;
+            picbxRefreshCategories.TabIndex = 14;
+            picbxRefreshCategories.TabStop = false;
+            picbxRefreshCategories.Click += picbxRefreshCategories_Click;
+            // 
+            // picbxRefreshStyles
+            // 
+            picbxRefreshStyles.Image = (Image)resources.GetObject("picbxRefreshStyles.Image");
+            picbxRefreshStyles.Location = new Point(1579, 572);
+            picbxRefreshStyles.Name = "picbxRefreshStyles";
+            picbxRefreshStyles.Size = new Size(45, 41);
+            picbxRefreshStyles.SizeMode = PictureBoxSizeMode.StretchImage;
+            picbxRefreshStyles.TabIndex = 15;
+            picbxRefreshStyles.TabStop = false;
+            picbxRefreshStyles.Click += picbxRefreshStyles_Click;
+            // 
             // AddImagePrompt
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1637, 758);
+            Controls.Add(picbxRefreshStyles);
+            Controls.Add(picbxRefreshCategories);
+            Controls.Add(picbxRefreshModels);
+            Controls.Add(picbxRefreshLoras);
+            Controls.Add(picbxRefreshSites);
             Controls.Add(grpbxCategories);
             Controls.Add(grpbxStyles);
             Controls.Add(grpbxSettings);
@@ -788,6 +859,11 @@
             grpbxSettings.ResumeLayout(false);
             grpbxSettings.PerformLayout();
             grpbxCategories.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picbxRefreshSites).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picbxRefreshLoras).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picbxRefreshModels).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picbxRefreshCategories).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picbxRefreshStyles).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -863,5 +939,10 @@
         private GroupBox grpbxCategories;
         private TextBox txtTitle;
         private Label lblTitle;
+        private PictureBox picbxRefreshSites;
+        private PictureBox picbxRefreshLoras;
+        private PictureBox picbxRefreshModels;
+        private PictureBox picbxRefreshCategories;
+        private PictureBox picbxRefreshStyles;
     }
 }

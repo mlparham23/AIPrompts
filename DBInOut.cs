@@ -60,7 +60,7 @@ namespace AIPrompts
             catch (Exception ex)
             {
                 string message = "Failed to load GPT categories.";
-                ShowMsgBox("DB Get GPT Categories - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                ShowMsgBox("DB Get GPT Categories - Failed", message, (int)_icon.Error, "OK", "","","","","", ex.ToString());
             }
 
             return chatCategories;
@@ -101,7 +101,7 @@ namespace AIPrompts
             catch (Exception ex)
             {
                 string message = "Failed to load GPT list from Database.";
-                ShowMsgBox("DB Get GPT List - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                ShowMsgBox("DB Get GPT List - Failed", message, (int)_icon.Error, "OK", "", "","","","", ex.ToString());
             }
 
             return chatGPTs;
@@ -149,7 +149,7 @@ namespace AIPrompts
                 message = "Failed to rename GPT category.\r\n\r\n";
                 message += "From:  " + cat.category + "\r\n";
                 message += "To:    " + newCat;
-                ShowMsgBox("DB Rename GPT Category - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                ShowMsgBox("DB Rename GPT Category - Failed", message, (int)_icon.Error, "OK", "", "","","","",ex.ToString());
             }
         }
 
@@ -216,7 +216,7 @@ namespace AIPrompts
                 message += "Category 3:    " + gPTPrompt.Category3 + "\r\n";
                 message += "Rank:          " + gPTPrompt.Rank + "\r\n";
                 message += "Prompt:        " + gPTPrompt.Prompt + "\r\n";
-                ShowMsgBox("DB Add GPT Prompt - Failed", message, (int)_icon.Error, "OK","", ex.ToString());
+                ShowMsgBox("DB Add GPT Prompt - Failed", message, (int)_icon.Error, "OK","", "","","","",ex.ToString());
             }
         }
 
@@ -260,7 +260,7 @@ namespace AIPrompts
             {
                 message = "Failed to add GPT category.\r\n\r\n";
                 message += "Category:  " + addCategory;
-                ShowMsgBox("DB Add GPT Category - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                ShowMsgBox("DB Add GPT Category - Failed", message, (int)_icon.Error, "OK", "", "","","","",ex.ToString());
             }
         }
 
@@ -300,7 +300,7 @@ namespace AIPrompts
                 message = "Failed to delete GPT category.\r\n\r\n";
                 message += "Category ID: " + cat.categoryID + "\r\n";
                 message += "Category:    " + cat.category;
-                ShowMsgBox("DB Delete GPT Category - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                ShowMsgBox("DB Delete GPT Category - Failed", message, (int)_icon.Error, "OK", "", "","","","",ex.ToString());
             }
         }
 
@@ -382,7 +382,7 @@ namespace AIPrompts
             {
                 message = "Failed to add AI Image prompt.\r\n\r\n";
                 message += "Prompt Title:  " + prompt.promptTitle;
-                ShowMsgBox("DB Add GPT Prompt - Failed", message, (int)_icon.Error, "OK", "", ex.Message.ToString());
+                ShowMsgBox("DB Add GPT Prompt - Failed", message, (int)_icon.Error, "OK", "","","","","", ex.Message.ToString());
             }
 
             return primeKey;
@@ -393,7 +393,7 @@ namespace AIPrompts
         /// </summary>
         /// <param name="prompt"></param>
         /// <param name="cat"></param>
-        public void addAIImageCategory(int prompt, List<ImageCategory> cat)
+        public void addAIImageCategory(int prompt, List<int> cat)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -406,7 +406,7 @@ namespace AIPrompts
                     foreach (var item in cat)
                     {
                         command.Parameters["@PromptID"].Value   = prompt;
-                        command.Parameters["@CatID"].Value      = item.catID;
+                        command.Parameters["@CatID"].Value      = item;
 
                         try
                         {
@@ -415,8 +415,8 @@ namespace AIPrompts
                         catch (Exception ex)
                         {
                             message = "Failed to add to Category Bridge.\r\n\r\n";
-                            message += "Category:  " + item.category;
-                            ShowMsgBox("DB Add Category  - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                            message += "Category:  " + item.ToString();
+                            ShowMsgBox("DB Add Category  - Failed", message, (int)_icon.Error, "OK", "", "","","","",ex.ToString());
                         }
                     }
                 }
@@ -428,7 +428,7 @@ namespace AIPrompts
         /// </summary>
         /// <param name="prompt"></param>
         /// <param name="styles"></param>
-        public void addAIImageStyle(int prompt, List<ImageStyle> styles)
+        public void addAIImageStyle(int prompt, List<int> styles)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -440,7 +440,7 @@ namespace AIPrompts
 
                     foreach (var item in styles)
                     {
-                        command.Parameters["@StyleID"].Value = item.styleID;
+                        command.Parameters["@StyleID"].Value = item;
                         command.Parameters["@PromptID"].Value = prompt;
 
                         try
@@ -450,8 +450,8 @@ namespace AIPrompts
                         catch (Exception ex)
                         {
                             message = "Failed to add to Style Table.\r\n\r\n";
-                            message += "Style:  " + item.styleName;
-                            ShowMsgBox("DB Add Style Name  - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                            message += "Style:  " + item.ToString();
+                            ShowMsgBox("DB Add Style Name  - Failed", message, (int)_icon.Error, "OK", "", "","","","",ex.ToString());
                         }
                     }
                 }
@@ -463,7 +463,7 @@ namespace AIPrompts
         /// </summary>
         /// <param name="prompt"></param>
         /// <param name="l"></param>
-        public void addAIImageLora(int prompt, List<ImageLora> l)
+        public void addAIImageLora(int prompt, List<int> l)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -476,7 +476,7 @@ namespace AIPrompts
                     foreach (var item in l)
                     {
                         command.Parameters["@PromptID"].Value = prompt;
-                        command.Parameters["@LoraID"].Value = item.loraID;
+                        command.Parameters["@LoraID"].Value = item;
 
                         try
                         {
@@ -485,7 +485,7 @@ namespace AIPrompts
                         catch (Exception ex)
                         {
                             message = "Failed to add to Lora Bridge.\r\n\r\n";
-                            message += "Category:  " + item.lora;
+                            message += "Category:  " + item.ToString();
                             ShowMsgBox("DB Add Lora Bridge  - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
                         }
                     }
@@ -498,7 +498,7 @@ namespace AIPrompts
         /// </summary>
         /// <param name="prompt"></param>
         /// <param name="m"></param>
-        public void addAIImageModel(int prompt, List<ImageModel> m)
+        public void addAIImageModel(int prompt, List<int> m)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -511,7 +511,7 @@ namespace AIPrompts
                     foreach (var item in m)
                     {
                         command.Parameters["@PromptID"].Value   = prompt;
-                        command.Parameters["@ModelID"].Value    = item.modelID;
+                        command.Parameters["@ModelID"].Value    = item;
 
                         try
                         {
@@ -520,15 +520,15 @@ namespace AIPrompts
                         catch (Exception ex)
                         {
                             message = "Failed to add to Model Bridge.\r\n\r\n";
-                            message += "Category:  " + item.modelName;
-                            ShowMsgBox("DB Add Model Bridge  - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                            message += "Category:  " + item.ToString();
+                            ShowMsgBox("DB Add Model Bridge  - Failed", message, (int)_icon.Error, "OK", "", "","","","",ex.ToString());
                         }
                     }
                 }
             }
         }
 
-        public void addAIImageSite(int PromptID, ImagePrompt prompt, List<ImageSite> s)
+        public void addAIImageSite(int PromptID, ImagePrompt prompt, List<int> s)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -542,7 +542,7 @@ namespace AIPrompts
 
                     foreach (var item in s)
                     {
-                        command.Parameters["@SiteID"].Value = item.siteID;
+                        command.Parameters["@SiteID"].Value = item;
                         command.Parameters["@PromptID"].Value = PromptID;
                         command.Parameters["@Rank"].Value = prompt.rating;
                         command.Parameters["@Note"].Value = prompt.notes;
@@ -554,8 +554,8 @@ namespace AIPrompts
                         catch (Exception ex)
                         {
                             message = "Failed to add to Site Bridge.\r\n\r\n";
-                            message += "Site:  " + item.siteName;
-                            ShowMsgBox("DB Add Site Bridge  - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                            message += "Site:  " + item.ToString();
+                            ShowMsgBox("DB Add Site Bridge  - Failed", message, (int)_icon.Error, "OK", "", "","","","",ex.ToString());
                         }
                     }
                 }
@@ -640,7 +640,7 @@ namespace AIPrompts
             catch (Exception ex)
             {
                 string message = "Failed to load AI Image Loras.";
-                ShowMsgBox("DB Get AI Image Loras - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                ShowMsgBox("DB Get AI Image Loras - Failed", message, (int)_icon.Error, "OK", "", "","","","",ex.ToString());
             }
 
             return loras;
@@ -688,7 +688,7 @@ namespace AIPrompts
             catch (Exception ex)
             {
                 string message = "Failed to load AI Image Sites.";
-                ShowMsgBox("DB Get AI Image Sites - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                ShowMsgBox("DB Get AI Image Sites - Failed", message, (int)_icon.Error, "OK", "", "","","","",ex.ToString());
             }
 
             return sites;
@@ -731,7 +731,7 @@ namespace AIPrompts
             catch (Exception ex)
             {
                 string message = "Failed to load AI Image Styles.";
-                ShowMsgBox("DB Get AI Image Styles - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                ShowMsgBox("DB Get AI Image Styles - Failed", message, (int)_icon.Error, "OK", "", "","","","",ex.ToString());
             }
 
             return st;
@@ -774,7 +774,7 @@ namespace AIPrompts
             catch (Exception ex)
             {
                 string message = "Failed to load AI Image Models.";
-                ShowMsgBox("DB Get AI Image Models - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                ShowMsgBox("DB Get AI Image Models - Failed", message, (int)_icon.Error, "OK", "", "","","","",ex.ToString());
             }
 
             return models;
@@ -816,7 +816,7 @@ namespace AIPrompts
             catch (Exception ex)
             {
                 string message = "Failed to load AI Image Categories.";
-                ShowMsgBox("DB Get AI Image Categories - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                ShowMsgBox("DB Get AI Image Categories - Failed", message, (int)_icon.Error, "OK", "", "","","","",ex.ToString());
             }
 
             return categories;
@@ -857,7 +857,7 @@ namespace AIPrompts
             catch (Exception ex)
             {
                 string message = "Failed to load AI Image Aspect Ratios.";
-                ShowMsgBox("DB Get AI Image Aspect Ratios - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                ShowMsgBox("DB Get AI Image Aspect Ratios - Failed", message, (int)_icon.Error, "OK", "", "","","","",ex.ToString());
             }
 
             return aspectRatios;
@@ -899,7 +899,7 @@ namespace AIPrompts
             catch (Exception ex)
             {
                 string message = "Failed to load AI Image Sample Methods.";
-                ShowMsgBox("DB Get AI Image Sample Methods - Failed", message, (int)_icon.Error, "OK", "", ex.ToString());
+                ShowMsgBox("DB Get AI Image Sample Methods - Failed", message, (int)_icon.Error, "OK", "", "","","","",ex.ToString());
             }
 
             return sampleMethods;
@@ -919,8 +919,12 @@ namespace AIPrompts
         /// <param name="buttonText1"></param>
         /// <param name="buttonText2"></param>
         /// <param name="systemMessage"></param>
-        private void ShowMsgBox(string title, string message, int icon, string buttonText1, string buttonText2 = "",  string systemMessage = "")
+        private int ShowMsgBox(string title, string message, int icon, string buttonText1, string buttonText2 = "",
+                string buttontonText3 = "", string buttonText4 = "", string buttonText5 = "", string buttonText6 = "",
+                string systemMessage = "")
         {
+            int result = 0;
+
             CustMsgBox custMsgBox = new CustMsgBox
             {
                 Title           = title,
@@ -936,16 +940,18 @@ namespace AIPrompts
                 // Standard Message Box
                 MsgBoxUser cMsgBox = new MsgBoxUser(custMsgBox);
                 cMsgBox.ShowDialog();
+                result = (int)cMsgBox.Result;
+                return result;
             }
             else
             {
                 //  System Error Message Box
                 MsgBoxSystem cMsgBox = new MsgBoxSystem(custMsgBox);
                 cMsgBox.ShowDialog();
+                result = (int)cMsgBox.Result;
+                return result;
             }
         }
-
-
 
         #endregion
 

@@ -150,8 +150,10 @@ namespace AIPrompts
         /// <param name="e"></param>
         private void btnAIImagesSearch_Click(object sender, EventArgs e)
         {
-            string _message = "AI Image/Search";
-            NotWorkingMessage(_message);
+            SearchImagePrompt _imagePrompt = new SearchImagePrompt();
+            _imagePrompt.Show();
+            //string _message = "AI Image/Search";
+            //NotWorkingMessage(_message);
         }
 
         /// <summary>
@@ -183,17 +185,17 @@ namespace AIPrompts
         /// <param name="e"></param>
         private void btnAIChatSearch_Click(object sender, EventArgs e)
         {
-            //  Variables
-            title = "Testing The User Box";    // message, title, icon, button...
-            message = "Jack and jill were Users";
-            errMessage = "System Error";
-            //string rank = txtRank.Text.Trim();
-            //string temp = "";
-            //string result = "Good";
-            int cmresult = 0;
+            ////  Variables
+            //title = "Testing The User Box";    // message, title, icon, button...
+            //message = "Jack and jill were Users";
+            //errMessage = "System Error";
+            ////string rank = txtRank.Text.Trim();
+            ////string temp = "";
+            ////string result = "Good";
+            //int cmresult = 0;
 
-            cmresult = ShowMsgBox(title, message, (int)_icon.Error, "OK","Not OK","Alfred","","","",errMessage);
-            message = cmresult.ToString();
+            //cmresult = ShowMsgBox(title, message, (int)_icon.Error, "OK","Not OK","Alfred","","","",errMessage);
+            //message = cmresult.ToString();
 
 
 

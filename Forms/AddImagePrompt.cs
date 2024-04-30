@@ -14,36 +14,47 @@ using db = AIPrompts.DBInOut;
 
 namespace AIPrompts.Forms
 {
-    public partial class AddImagePrompt : Form
+    public partial class AddImagePrompt : Form, IDisposable
     {
         #region Class Variables
-        List<ImageCategory> cat = new List<ImageCategory>();
-        List<ImageLora> lora = new List<ImageLora>();
-        List<ImageSite> site = new List<ImageSite>();
-        List<ImageStyle> style = new List<ImageStyle>();
-        List<ImageModel> model = new List<ImageModel>();
-        List<ImageAspectRatio> aspectRatios = new List<ImageAspectRatio>();
-        List<ImageSampleMethod> sampleMethods = new List<ImageSampleMethod>();
-        //List<ImageSampleMethod> sampleMethod = new List<ImageSampleMethod>();
 
-        DBInOut db = new DBInOut();
+        List<ImageCategory>     cat             = new List<ImageCategory>();
+        List<ImageLora>         lora            = new List<ImageLora>();
+        List<ImageSite>         site            = new List<ImageSite>();
+        List<ImageStyle>        style           = new List<ImageStyle>();
+        List<ImageModel>        model           = new List<ImageModel>();
+        List<ImageAspectRatio>  aspectRatios    = new List<ImageAspectRatio>();
+        List<ImageSampleMethod> sampleMethods   = new List<ImageSampleMethod>();
+        CustMsgBox              cmb             = new CustMsgBox();
+        DBInOut                 db              = new DBInOut();
+
         #endregion
 
         #region Startup
 
+        /// <summary>
+        /// Initialize everything during startup
+        /// </summary>
         public AddImagePrompt()
         {
             InitializeComponent();
-            loadLoras();
+            InitializeLists();
+            SetupCheckOnClick();
+        }
+
+        private void InitializeLists()
+        {
+            LoadLoras();
             LoadModels();
             LoadCategories();
             LoadSites();
             LoadStyles();
-            LoadAspectRatio();   // Aspectratio
-            //LoadImageMode();
+            LoadAspectRatio();
             LoadSampleMethod();
+        }
 
-            // Click Once
+        private void SetupCheckOnClick()
+        {
             cklstbxCategories.CheckOnClick  = true;
             cklstbxLoras.CheckOnClick       = true;
             cklstbxSites.CheckOnClick       = true;
@@ -56,776 +67,381 @@ namespace AIPrompts.Forms
         #region Form
         #region Menu Strip
 
-        /// <summary>
-        /// Menustrip: File/Exit
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void mnustrpFileExit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void mnustrpFunctionAddPrompt_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void mnustrpFunctionClearScreen_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void mnustrpFunctionRefreshScreen_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void mnustrpFileExit_Click(             object sender, EventArgs e) => Close();
+        private void mnustrpFunctionAddPrompt_Click(    object sender, EventArgs e) => addPrompt();
+        private void mnustrpFunctionClearScreen_Click(  object sender, EventArgs e) => ClearFields();
+        private void mnustrpFunctionRefreshScreen_Click(object sender, EventArgs e) => RefreshLists();
 
         #endregion
         #region Form Controls
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void btnAdd_Click(                  object sender, EventArgs e) => addPrompt();
+        private void btnClear_Click(                object sender, EventArgs e) => ClearFields();
+        private void btnRefresh_Click(              object sender, EventArgs e) => RefreshLists();
+        private void btnExit_Click(                 object sender, EventArgs e) => Close();
+        private void picbxRefreshSites_Click(       object sender, EventArgs e) => LoadSites();
+        private void picbxRefreshLoras_Click(       object sender, EventArgs e) => LoadLoras();
+        private void picbxRefreshModels_Click(      object sender, EventArgs e) => LoadModels();
+        private void picbxRefreshCategories_Click(  object sender, EventArgs e) => LoadCategories();
+        private void picbxRefreshStyles_Click(      object sender, EventArgs e) => LoadStyles();
+
+        #endregion
+        #endregion
+        // #endregion
+
+        #region Methods
+        #region Code
+
+        private void addPrompt()
         {
-            addPrompt();
+            try
+            {
+                var prompt              = GetPromptFromForm();
+                var settings            = GetSettingsFromForm();
+                List<int> categories    = GetIDsFromForm(cklstbxCategories, cat, c => c.category, c => c.catID);
+                List<int> sites         = GetIDsFromForm(cklstbxSites,      site, s => s.siteName, s => s.siteID);
+                List<int> loras         = GetIDsFromForm(cklstbxLoras,      lora, l => l.lora, l => l.loraID);
+                List<int> models        = GetIDsFromForm(cklstbxModels,     model, m => m.modelName, m => m.modelID);
+                List<int> styles        = GetIDsFromForm(cklstbxStyles,     style, s => s.styleName, s => s.styleID);
+                prompt                  = CleanPrompt(prompt);
+                DisplayEditedPrompt(prompt);
+
+                var validationResult = ValidateInputs(prompt, categories, sites, settings);
+                if (!string.IsNullOrEmpty(validationResult))
+                {
+                    ShowErrorMessage(validationResult);
+                    return;
+                }
+
+                if (!ConfirmAddPrompt()) return;
+
+                var duplicateCheck = db.checkAIImagePromptExists(prompt);
+                if (duplicateCheck.Contains("Error"))
+                {
+                    ShowErrorMessage("Prompt already exist.");
+                    return;
+                }
+
+                var promptId = db.AddAIImagePrompt(prompt);
+                db.addAIImageCategory(promptId, categories);
+                db.addAIImageLora(    promptId, loras);
+                db.addAIImageModel(   promptId, models);
+                db.addAIImageSite(    promptId, prompt, sites);
+                db.addAIImageStyle(   promptId, styles);
+                db.AddAISettings(     promptId, settings);
+
+                ShowSuccessMessage($"Prompt has been added to database.{Environment.NewLine}{Environment.NewLine}Title: {prompt.promptTitle}");
+            }
+            catch (Exception ex)
+            {
+                ShowErrorMessage($"An error occurred while adding the prompt:{Environment.NewLine}{ex.Message}");
+            }
         }
 
-        /// <summary>
-        /// Clear/Reset Form
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnClear_Click(object sender, EventArgs e)
+        private ImagePrompt CleanPrompt(ImagePrompt prompt)
         {
-            clearfields();
+            //  Fix
+            prompt.prompt           = CleanStringForDatabase(prompt.prompt,         1000).Trim();
+            prompt.negativePrompt   = CleanStringForDatabase(prompt.negativePrompt, 1000).Trim();
+            prompt.promptTitle      = CleanStringForDatabase(prompt.promptTitle,    50).Trim();
+            prompt.notes            = CleanStringForDatabase(prompt.notes,          1000).Trim();
+
+            return prompt;
         }
 
-        /// <summary>
-        /// Refresh the checklist boxes
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnRefresh_Click(object sender, EventArgs e)
+        private void DisplayEditedPrompt(ImagePrompt prompt)
+        { 
+            txtPrompt.Text      = prompt.prompt.Trim();
+            txtNegPrompt.Text   = prompt.negativePrompt.Trim();
+            txtNotes.Text       = prompt.notes.Trim();
+            txtTitle.Text       = prompt.promptTitle.Trim();
+        }
+
+        private ImagePrompt GetPromptFromForm()
         {
-            loadLoras();
+            return new ImagePrompt
+            {
+                prompt          = txtPrompt.Text.Trim(),
+                negativePrompt  = txtNegPrompt.Text.Trim(),
+                promptTitle     = txtTitle.Text.Trim(),
+                notes           = txtNotes.Text.Trim(),
+                rating          = int.TryParse(txtRating.Text.Trim(), out var rating) ? rating : 0
+            };
+        }
+
+        private ImageSettings GetSettingsFromForm()
+        {
+            return new ImageSettings
+            {
+                imageAspectRatio            = cboAspectRatio.Text.Trim(),
+                seed                        = int.TryParse(txtSeed.Text.Trim(),                     out var seed)                   ? seed : 0,
+                CGFScale                    = int.TryParse(txtCFGScale.Text.Trim(),                 out var cgfScale)               ? cgfScale : 0,
+                steps                       = int.TryParse(txtSteps.Text.Trim(),                    out var steps)                  ? steps : 0,
+                scheduler                   = int.TryParse(txtScheduler.Text.Trim(),                out var scheduler)              ? scheduler : 0,
+                samplingMethod              = cboSampleMethod.Text.Trim(),
+                DPMSolverGuidanceScale      = int.TryParse(txtDpmsolverGuideance.Text.Trim(),       out var dpmSolverGuidance)      ? dpmSolverGuidance : 0,
+                DPMSolverInterferenceSteps  = int.TryParse(txtDpmsolverInterference.Text.Trim(),    out var dpmSolverInterference)  ? dpmSolverInterference : 0,
+                SASolverGuidanceScale       = int.TryParse(txtSaSolverGuideance.Text.Trim(),        out var saSolverGuidance)       ? saSolverGuidance : 0,
+                SASolverInterferenceSteps   = int.TryParse(txtSaSolverInterference.Text.Trim(),     out var saSolverInterference)   ? saSolverInterference : 0,
+                tags                        = txtTags.Text.Trim()
+            };
+        }
+
+        private string CleanStringForDatabase(string input, int maxLength = 0)
+        {
+            string cleanedString = input;
+
+            try
+            {
+                // Check if the input is null or empty
+                if (string.IsNullOrEmpty(input))
+                {
+                    throw new ArgumentException("Input string is null or empty.");
+                }
+
+                // Check if the input exceeds the maximum length of the varchar field
+                // Change this value to match your varchar field's maximum length
+                if (maxLength > 0) 
+                {
+                    if (cleanedString.Length > maxLength)
+                    {
+                        throw new ArgumentException("Input string exceeds the maximum length allowed for the database field.");
+                        cleanedString = cleanedString.Substring(0, Math.Min(cleanedString.Length, maxLength));
+                    }
+                }
+
+                // Replace single quotes with two single quotes to escape them
+                cleanedString = cleanedString.Replace("'", "''");
+
+                return cleanedString;
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during the cleaning process
+                Console.WriteLine("Error cleaning string: " + ex.Message);
+                return null; // Or throw an exception, depending on your application's requirements
+            }
+        }
+
+        private List<int> GetCategoriesFromForm(CheckedListBox checkedListBox, List<ImageCategory> categories)
+        {
+            // Get the selected category names from the CheckedListBox
+            List<string> selectedNames = checkedListBox.CheckedItems.Cast<string>().ToList();
+
+            // Use LINQ to get the category IDs for the selected names
+            List<int> selectedIDs = categories
+                .Where(c => selectedNames.Contains(c.category))
+                .Select(c => c.catID)
+                .ToList();
+
+            return selectedIDs;
+        }
+
+
+        private List<int> GetIDsFromForm<T>(CheckedListBox checkedListBox, List<T> items, Func<T, string> getName, Func<T, int> getID)
+        {
+            // Get the selected item names from the CheckedListBox
+            List<string> selectedNames = checkedListBox.CheckedItems.Cast<string>().ToList();
+
+            // Use LINQ to get the IDs for the selected names
+            List<int> selectedIDs = items
+                .Where(item => selectedNames.Contains(getName(item)))
+                .Select(item => getID(item))
+                .ToList();
+
+            return selectedIDs;
+        }
+
+        //private List<ImageSite> GetSitesFromForm()
+        //{
+        //    return GetSelectedItems(cklstbxSites).Select(s => new ImageSite { siteName = s }).ToList();
+        //}
+
+        //private List<ImageLora> GetLorasFromForm()
+        //{
+        //    return GetSelectedItems(cklstbxLoras).Select(l => new ImageLora { lora = l }).ToList();
+        //}
+
+        //private List<ImageModel> GetModelsFromForm()
+        //{
+        //    return GetSelectedItems(cklstbxModels).Select(m => new ImageModel { modelName = m }).ToList();
+        //}
+
+        //private List<ImageStyle> GetStylesFromForm()
+        //{
+        //    return GetSelectedItems(cklstbxStyles).Select(s => new ImageStyle { styleName = s }).ToList();
+        //}
+
+        //private List<string> GetSelectedItems(CheckedListBox clb)
+        //{
+        //    return clb.CheckedItems.Cast<string>().ToList();
+        //}
+
+        private string ValidateInputs(ImagePrompt prompt, List<int> categories, List<int> sites, ImageSettings settings)
+        {
+            if (string.IsNullOrEmpty(prompt.promptTitle))
+                return "Prompt Title is missing or blank.";
+
+            if (prompt.rating < 0 || prompt.rating > 10)
+                return "Rating must be between 0 and 10.";
+
+            if (sites.Count == 0)
+                return "No Sites selected. Please select at least one site.";
+
+            if (categories.Count == 0)
+                return "No Categories selected. Please select between 1 and 5 categories.";
+
+            if (settings.seed < -1 || settings.seed > 2147483647)
+                return "Seed must be between 0 and 2,147,483,647.";
+
+            if (settings.CGFScale < 0 || settings.CGFScale > 20)
+                return "CFG Scale must be between 0 and 20.";
+
+            if (settings.steps < 0 || settings.steps > 50)
+                return "Steps must be between 0 and 50.";
+
+            return string.Empty;
+        }
+
+        private bool ConfirmAddPrompt()
+        {
+            cmb.ResetToDefault();
+            cmb.Title       = "Add Prompt";
+            cmb.Message     = "Are you sure you want to add this prompt?";
+            cmb.ButtonText1 = "Yes";
+            cmb.ButtonText2 = "No";
+            cmb.Icon = (int)MessageBoxIcon.Question;
+            return ShowMessageBox(cmb) == 1;
+        }
+
+        private void ShowSuccessMessage(string message)
+        {
+            cmb.ResetToDefault();
+            cmb.Title       = "Add Prompt";
+            cmb.Message     = message;
+            cmb.ButtonText1 = "OK";
+            cmb.Icon        = (int)MessageBoxIcon.Information;
+            ShowMessageBox(cmb);
+        }
+
+        private void ShowErrorMessage(string message)
+        {
+            cmb.ResetToDefault();
+            cmb.Title       = "Error";
+            cmb.Message     = message;
+            cmb.ButtonText1 = "OK";
+            cmb.Icon        = (int)MessageBoxIcon.Error;
+            ShowMessageBox(cmb);
+        }
+
+        private int ShowMessageBox(CustMsgBox cmb)
+        {
+            if (string.IsNullOrEmpty(cmb.SystemMessage))
+            {
+                MsgBoxUser cMsgBox = new MsgBoxUser(cmb);
+                cMsgBox.ShowDialog();
+                cMsgBox.Dispose();
+                return (int)cMsgBox.Result;
+            }
+            else
+            {
+                MsgBoxSystem cMsgBox = new MsgBoxSystem(cmb);
+                cMsgBox.ShowDialog();
+                cMsgBox.Dispose();
+                return (int)cMsgBox.Result;
+            }
+        }
+
+        private void RefreshLists()
+        {
+            LoadLoras();
             LoadModels();
             LoadCategories();
             LoadSites();
             LoadStyles();
         }
 
-        /// <summary>
-        /// Button: File/Exit
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnExit_Click(object sender, EventArgs e)
+        private void LoadLoras()
         {
-            this.Close();
-        }
-
-        #endregion
-        #endregion
-
-        #region Methods
-        #region Code
-
-        /// <summary>
-        /// Add prompt
-        /// </summary>
-        public void addPrompt()
-        {
-            // Variables
-            List<string>        loras       = new List<string>();
-            List<string>        models      = new List<string>();
-            List<string>        categories  = new List<string>();
-            List<string>        sites       = new List<string>();
-            List<string>        st          = new List<string>();
-            ImagePrompt         prompt      = new ImagePrompt();
-            List<ImageModel>    m           = new List<ImageModel>();
-            List<ImageLora>     l           = new List<ImageLora>();
-            List<ImageCategory> c           = new List<ImageCategory>();
-            List<ImageSite>     s           = new List<ImageSite>();
-            List<ImageStyle>    styles      = new List<ImageStyle>();
-            ImageSettings       settings    = new ImageSettings();
-            int                 PromptID    = 0;
-            string              temp        = "";
-            string              result      = "";
-            int                 result2     = 0;
-            CustMsgBox          cmb         = new CustMsgBox();
-
-            //  Collect Data
-            //      Prompt
-            prompt.prompt           = txtPrompt.Text.Trim();
-            prompt.negativePrompt   = txtNegPrompt.Text.Trim();
-            prompt.promptTitle      = txtTitle.Text.Trim();  
-            prompt.notes            = txtNotes.Text.Trim();
-            temp                    = txtRating.Text.Trim();
-            if (!string.IsNullOrEmpty(temp)) prompt.rating = Int32.Parse(temp);
-
-            //      Sites
-            sites = getSelectedItems(cklstbxSites);
-
-            foreach (var item in sites)
-            {
-                ImageSite t = new ImageSite();
-                t.siteName  = item;
-                s.Add(t);
-            }
-
-            //      Loras
-            loras = getSelectedItems(cklstbxLoras);
-
-            foreach (var item in loras)
-            {
-                ImageLora t = new ImageLora();
-                t.lora = item;
-                l.Add(t);
-            }
-
-            //      Models
-            models = getSelectedItems(cklstbxModels);
-
-            foreach (var item in models)
-            {
-                ImageModel t = new ImageModel();
-                t.modelName = item;
-                m.Add(t);
-            }
-
-            //      Categories
-            categories = getSelectedItems(cklstbxCategories);
-
-            foreach (var item in categories)
-            {
-                ImageCategory t = new ImageCategory();
-                t.category = item;
-                c.Add(t);
-            }
-
-            //      Styles
-            st = getSelectedItems(cklstbxStyles);
-
-            foreach (var item in st)
-            {
-                ImageStyle t = new ImageStyle();
-                t.styleName = item;
-                styles.Add(t);
-            }
-
-            //  Get IDs for Object Items
-            //      Sites
-            foreach (var item in s)
-            {
-                item.siteID = site.Where(x => x.siteName == item.siteName).Select(x => x.siteID).FirstOrDefault();
-            }
-
-            //      Loras
-            foreach (var item in l)
-            {
-                item.loraID = lora.Where(x => x.lora == item.lora).Select(x => x.loraID).FirstOrDefault();
-            }
-
-            //      Categories
-            foreach (var item in c)
-            {
-                item.catID = cat.Where(x => x.category == item.category).Select(x => x.catID).FirstOrDefault();
-            }
-
-            //      Models
-            foreach (var item in m)
-            {
-                item.modelID = model.Where(x => x.modelName == item.modelName).Select(x => x.modelID).FirstOrDefault();
-            }
-
-            //      Styles
-            foreach (var item in styles)
-            {
-                item.styleID    = style.Where(x => x.styleName == item.styleName).Select(x => x.styleID).FirstOrDefault();
-                item.notes      = prompt.notes;
-            }
-
-            //      Settings
-            temp = cboAspectRatio.Text.Trim();
-            if (!string.IsNullOrEmpty(temp)) settings.imageAspectRatio = temp;
-            if (!string.IsNullOrEmpty(txtSeed.Text.Trim())) settings.seed = Int32.Parse(txtSeed.Text.Trim());
-            if (!string.IsNullOrEmpty(txtCFGScale.Text.Trim())) settings.CGFScale = Int32.Parse(txtCFGScale.Text.Trim());
-            if (!string.IsNullOrEmpty(txtSteps.Text.Trim())) settings.steps = Int32.Parse(txtSteps.Text.Trim());
-            if (!string.IsNullOrEmpty(txtScheduler.Text.Trim())) settings.scheduler = Int32.Parse(txtScheduler.Text.Trim());
-            temp = cboSampleMethod.Text.Trim();
-            if (!string.IsNullOrEmpty(temp)) settings.samplingMethod = temp;
-            if (!string.IsNullOrEmpty(txtDpmsolverGuideance.Text.Trim())) settings.DPMSolverGuidanceScale = Int32.Parse(txtDpmsolverGuideance.Text.Trim());
-            if (!string.IsNullOrEmpty(txtDpmsolverInterference.Text.Trim())) settings.DPMSolverInterferenceSteps = Int32.Parse(txtDpmsolverInterference.Text.Trim());
-            if (!string.IsNullOrEmpty(txtSaSolverGuideance.Text.Trim())) settings.SASolverGuidanceScale = Int32.Parse(txtSaSolverGuideance.Text.Trim());
-            if (!string.IsNullOrEmpty(txtSaSolverInterference.Text.Trim())) settings.SASolverInterferenceSteps = Int32.Parse(txtSaSolverInterference.Text.Trim());
-            if (!string.IsNullOrEmpty(txtTags.Text.Trim())) settings.tags = txtTags.Text.Trim();
-
-            //  Check Inputs
-            result = checkAddInputs(prompt, c, s, settings);
-            if (result.Contains("Error")) return;
-
-            // Prompt User if they wish to cntinue
-            cmb.Title = "Add Prompt";
-            cmb.Message = "Are you sure you want to add this prompt?";
-            cmb.ButtonText1 = "Yes";
-            cmb.ButtonText2 = "No";
-            cmb.ButtonText3 = "";
-            cmb.ButtonText4 = "";
-            cmb.ButtonText5 = "";
-            cmb.ButtonText6 = "";
-            cmb.SystemMessage = "";
-            cmb.Icon = (int)_icon.Question;
-            result2 = ShowMsgBox(cmb);
-            if (result2 != 1) return;   // No
-
-            //  Add to database
-            //      Checdk for duplicate first
-            temp = db.checkAIImagePromptExists(prompt);
-            if (temp.Contains("Error"))
-            {
-                //  Error
-                cmb.Title = "Duplicate Prompt";
-                cmb.Message = "This prompt already exist in the database. Enter a different prompt and try again. Thank you.\r\n\r\nAborting";
-                cmb.ButtonText1 = "Ok";
-                cmb.ButtonText2 = "";
-                cmb.ButtonText3 = "";
-                cmb.ButtonText4 = "";
-                cmb.ButtonText5 = "";
-                cmb.ButtonText6 = "";
-                cmb.SystemMessage = "";
-                cmb.Icon = (int)_icon.Error;
-                ShowMsgBox(cmb);
-                return;
-            }
-
-            //      Prompt
-            PromptID = db.AddAIImagePrompt(prompt);
-
-            //  Categorys
-            db.addAIImageCategory(PromptID, c);
-
-            //  Loras
-            if (l.Count > 0) db.addAIImageLora(PromptID, l);
-
-            //  Models
-            if (m.Count > 0) db.addAIImageModel(PromptID, m);
-
-            //  Sites
-            if (s.Count > 0) db.addAIImageSite(PromptID, prompt, s);
-
-            //  Styles
-            if (styles.Count > 0) db.addAIImageStyle(PromptID, styles);
-
-            //  Settings
-            db.AddAISettings(PromptID, settings);
-
-            //  Notify User
-            cmb.Title = "Add Prompt";
-            cmb.Message = "Prompt has been added to database.\r\n\r\nTitle: " + prompt.promptTitle;
-            cmb.ButtonText1 = "Ok";
-            cmb.ButtonText2 = "";
-            cmb.ButtonText3 = "";
-            cmb.ButtonText4 = "";
-            cmb.ButtonText5 = "";
-            cmb.ButtonText6 = "";
-            cmb.SystemMessage = "";
-            cmb.Icon = (int)_icon.Information;
-            result2 = ShowMsgBox(cmb);
-
-            // Reset form
-            clearfields();
-            clearCheckListBoxes();
-
-            return;
-        }
-
-        /// <summary>
-        /// Check Inputs
-        /// </summary>
-        /// <param name="_prompt"></param>
-        /// <param name="_category"></param>
-        /// <param name="_site"></param>
-        /// <param name="_settings"></param>
-        /// <returns></returns>
-        public string checkAddInputs(ImagePrompt _prompt, List<ImageCategory> _category, List<ImageSite> _site, ImageSettings _settings)
-        {
-            //  Variables
-            string temp = "";
-            int result = 0;
-            CustMsgBox cmb = new CustMsgBox();
-
-
-            //  Check Text Boxes
-            //      Rating
-            //          Exists
-            temp = txtRating.Text.Trim();
-            if (string.IsNullOrEmpty(temp))
-            {
-                cmb.Title = "Missing Rating";
-                cmb.Message = "Rating is missing or is blank. Please fill in this textbox and try again. Thank you.";
-                cmb.ButtonText1 = "OK";
-                cmb.ButtonText2 = "";
-                cmb.ButtonText3 = "";
-                cmb.ButtonText4 = "";
-                cmb.ButtonText5 = "";
-                cmb.ButtonText6 = "";
-                cmb.SystemMessage = "";
-                cmb.Icon = (int)_icon.Error;
-                ShowMsgBox(cmb);
-                return "Error";
-            }
-
-            //          Check if numeric
-            bool isNUmber = int.TryParse(txtRating.Text.Trim(), out result);
-            if (!isNUmber)
-            {
-                cmb.Title = "Rating Is Not Numeric";
-                cmb.Message = "Rating is not numeric. Enter a number 0-10 for the rating and try again. Thank you.";
-                cmb.ButtonText1 = "OK";
-                cmb.ButtonText2 = "";
-                cmb.ButtonText3 = "";
-                cmb.ButtonText4 = "";
-                cmb.ButtonText5 = "";
-                cmb.ButtonText6 = "";
-                cmb.SystemMessage = "";
-                cmb.Icon = (int)_icon.Error;
-                ShowMsgBox(cmb);
-                return "Error";
-            }
-            else
-            {
-                //          Check if in range
-                if (result < 0 || result > 10)
-                {
-                    cmb.Title = "Rating Is Out Of Range";
-                    cmb.Message = "Rating is not in the range 0-10. Enter a number 0-10 for the rating and try again. Thank you.";
-                    cmb.ButtonText1 = "OK";
-                    cmb.ButtonText2 = "";
-                    cmb.ButtonText3 = "";
-                    cmb.ButtonText4 = "";
-                    cmb.ButtonText5 = "";
-                    cmb.ButtonText6 = "";
-                    cmb.SystemMessage = "";
-                    cmb.Icon = (int)_icon.Error;
-                    ShowMsgBox(cmb);
-                    return "Error";
-                }
-            }
-
-            //      Check Prompt Title
-            if (string.IsNullOrEmpty(_prompt.promptTitle))
-            {
-                cmb.Title = "Missing Prompt Title";
-                cmb.Message = "Prompt Title is missing or is blank. Please fill in this textbox and try again. Thank you.";
-                cmb.ButtonText1 = "OK";
-                cmb.ButtonText2 = "";
-                cmb.ButtonText3 = "";
-                cmb.ButtonText4 = "";
-                cmb.ButtonText5 = "";
-                cmb.ButtonText6 = "";
-                cmb.SystemMessage = "";
-                cmb.Icon = (int)_icon.Error;
-                ShowMsgBox(cmb);
-                return "Error";
-            }
-
-            //  Chedck CheckListBoxes
-            //      Check Sites
-            if (site.Count == 0)
-            {
-                cmb.Title = "No Sites Selected";
-                cmb.Message = "No Sites selected. Please select at least one site and try again. Thank you.";
-                cmb.ButtonText1 = "OK";
-                cmb.ButtonText2 = "";
-                cmb.ButtonText3 = "";
-                cmb.ButtonText4 = "";
-                cmb.ButtonText5 = "";
-                cmb.ButtonText6 = "";
-                cmb.SystemMessage = "";
-                cmb.Icon = (int)_icon.Error;
-                ShowMsgBox(cmb);
-                return "Error";
-            }
-
-            //      Check Categories
-            if (_category.Count == 0)
-            {
-                cmb.Title = "No Categories Selected";
-                cmb.Message = "No Categories selected. Please select between 1 and 5 categories and try again. Thank you.";
-                cmb.ButtonText1 = "OK";
-                cmb.ButtonText2 = "";
-                cmb.ButtonText3 = "";
-                cmb.ButtonText4 = "";
-                cmb.ButtonText5 = "";
-                cmb.ButtonText6 = "";
-                cmb.SystemMessage = "";
-                cmb.Icon = (int)_icon.Error;
-                ShowMsgBox(cmb);
-                return "Error";
-            }
-
-            //if (_category.Count > 5)
-            //{
-            //    cmb.Title = "Too Many Categories Selected";
-            //    cmb.Message = "Too many categories selected. Please select between 1 and 5 categories and try again. Thank you.";
-            //    cmb.ButtonText1 = "OK";
-            //    cmb.ButtonText2 = "";
-            //    cmb.ButtonText3 = "";
-            //    cmb.ButtonText4 = "";
-            //    cmb.ButtonText5 = "";
-            //    cmb.ButtonText6 = "";
-            //    cmb.SystemMessage = "";
-            //    cmb.Icon = (int)_icon.Error;
-            //    ShowMsgBox(cmb);
-            //    return "Error";
-            //}
-
-            //  Check Settimgs
-            //      Check Seed
-            if (_settings.seed < -1 || _settings.seed > 2147483647)
-            {
-                cmb.Title = "Seed Is Out Of Range";
-                cmb.Message = "Seed is not in the range 0 - 2,147,483,647. Enter a number 0 - 2,147,483,647 for the Seed and try again. Thank you.";
-                cmb.ButtonText1 = "OK";
-                cmb.ButtonText2 = "";
-                cmb.ButtonText3 = "";
-                cmb.ButtonText4 = "";
-                cmb.ButtonText5 = "";
-                cmb.ButtonText6 = "";
-                cmb.SystemMessage = "";
-                cmb.Icon = (int)_icon.Error;
-                ShowMsgBox(cmb);
-                return "Error";
-            }
-
-            //      Check CFG Scale
-            if (_settings.CGFScale < 0 || _settings.CGFScale > 20)
-            {
-                cmb.Title = "CFG Scale Is Out Of Range";
-                cmb.Message = "CFG Scale is not in the range 0 - 20. Enter a number 0 - 20 for the CFG Scale and try again. Thank you.";
-                cmb.ButtonText1 = "OK";
-                cmb.ButtonText2 = "";
-                cmb.ButtonText3 = "";
-                cmb.ButtonText4 = "";
-                cmb.ButtonText5 = "";
-                cmb.ButtonText6 = "";
-                cmb.SystemMessage = "";
-                cmb.Icon = (int)_icon.Error;
-                ShowMsgBox(cmb);
-                return "Error";
-            }
-
-            //      Check Steps 
-            if (_settings.steps < 0 || _settings.steps > 50)
-            {
-                cmb.Title = "Steps Is Out Of Range";
-                cmb.Message = "Steps is not in the range 0 - 50. Enter a number 0 - 50 for the Steps and try again. Thank you.";
-                cmb.ButtonText1 = "OK";
-                cmb.ButtonText2 = "";
-                cmb.ButtonText3 = "";
-                cmb.ButtonText4 = "";
-                cmb.ButtonText5 = "";
-                cmb.ButtonText6 = "";
-                cmb.SystemMessage = "";
-                cmb.Icon = (int)_icon.Error;
-                ShowMsgBox(cmb);
-                return "Error";
-            }
-
-            return "Good";
-        }
-
-        /// <summary>
-        /// Get 
-        /// </summary>
-        /// <param name="clb"></param>
-        /// <returns></returns>
-        public List<string> getSelectedItems(CheckedListBox clb)
-        {
-            //  Variables
-            string temp = "";
-            List<string> items = new List<string>();
-
-            foreach (var item in clb.CheckedItems)
-            {
-                temp = item.ToString().Trim();
-                if (!string.IsNullOrEmpty(temp)) items.Add(temp); ;
-            }
-            return items;
-        }
-
-        /// <summary>
-        /// Clear CheckListBox
-        /// </summary>
-        public void clearCheckListBoxes()
-        {
-            for (int i = 0; i < cklstbxLoras.Items.Count; i++)
-            {
-                cklstbxLoras.SetItemChecked(i, false);
-            }
-
-            for (int i = 0; i < cklstbxCategories.Items.Count; i++)
-            {
-                cklstbxCategories.SetItemChecked(i, false);
-            }
-
-            for (int i = 0; i < cklstbxSites.Items.Count; i++)
-            {
-                cklstbxSites.SetItemChecked(i, false);
-            }
-
-            for (int i = 0; i < cklstbxStyles.Items.Count; i++)
-            {
-                cklstbxStyles.SetItemChecked(i, false);
-            }
-
-            for (int i = 0; i < cklstbxModels.Items.Count; i++)
-            {
-                cklstbxModels.SetItemChecked(i, false);
-            }
-        }
-
-        /// <summary>
-        /// Load Loras
-        /// </summary>
-        public void loadLoras()
-        {
-            //  Load Loras
             lora.Clear();
-            lora = db.getAllLoras();
-            LoadLoras(lora);
+            lora.AddRange(db.getAllLoras());
+            LoadListBox(cklstbxLoras, lora.Select(l => l.lora));
         }
 
-        /// <summary>
-        /// Load Models
-        /// </summary>
-        public void LoadModels()
+        private void LoadModels()
         {
-            //  Load Models
             model.Clear();
-            model = db.getAllModels();
-            LoadModels(model);
+            model.AddRange(db.getAllModels());
+            LoadListBox(cklstbxModels, model.Select(m => m.modelName));
         }
 
-        /// <summary>
-        /// Load categories
-        /// </summary>
-        public void LoadCategories()
+        private void LoadCategories()
         {
-            //  Load Categories
             cat.Clear();
-            cat = db.getAllCategories();
-            LoadCategories(cat);
+            cat.AddRange(db.getAllCategories());
+            LoadListBox(cklstbxCategories, cat.Select(c => c.category));
         }
 
-        /// <summary>
-        /// Load sites
-        /// </summary>
-        public void LoadSites()
+        private void LoadSites()
         {
-            //  Load Sites
             site.Clear();
-            site = db.getAllSites();
-            LoadSites(site);
+            site.AddRange(db.getAllSites());
+            LoadListBox(cklstbxSites, site.Select(s => s.siteName));
         }
 
-        public void LoadStyles()
+        private void LoadStyles()
         {
-            //  Load Styles 
             style.Clear();
-            style = db.getAllStyles();
-            LoadStyles(style);
+            style.AddRange(db.getAllStyles());
+            LoadListBox(cklstbxStyles, style.Select(s => s.styleName));
         }
 
-        /// <summary>
-        /// Load Aspect Ratio
-        /// </summary>
-        public void LoadAspectRatio()
+        private void LoadAspectRatio()
         {
-            //  Load Aspect Ratio
             aspectRatios.Clear();
-            aspectRatios = db.getAllAspectRatios();
-            LoadAspectRatios(aspectRatios);
+            aspectRatios.AddRange(db.getAllAspectRatios());
+            LoadComboBox(cboAspectRatio, aspectRatios.Select(ar => ar.AspectRatio), addEmptyItem: true);
         }
 
-        /// <summary>
-        /// Load Sample Method
-        /// </summary>
-        public void LoadSampleMethod()
+        private void LoadSampleMethod()
         {
-            //  Load Sample Method
             sampleMethods.Clear();
-            sampleMethods = db.getAllSampleMethods();
-            LoadSampleMethods(sampleMethods);
+            sampleMethods.AddRange(db.getAllSampleMethods());
+            LoadComboBox(cboSampleMethod, sampleMethods.Select(sm => sm.SampleMethod));
         }
 
-        /// <summary>
-        /// Build out Sites Check List Box
-        /// </summary>
-        /// <param name="_Site"></param>
-        public void LoadSites(List<ImageSite> _site)
+        private void LoadListBox(ListBox listBox, IEnumerable<string> items)
         {
-            cklstbxSites.Items.Clear();
-            foreach (var item in _site)
-            {
-                if (string.IsNullOrEmpty(item.siteName.Trim())) continue;
-                cklstbxSites.Items.Add(item.siteName.Trim());
-            }
+            listBox.Items.Clear();
+            listBox.Items.AddRange(items.Where(i => !string.IsNullOrEmpty(i)).ToArray());
         }
 
-        /// <summary>
-        /// Build out Styles Check List Box
-        /// </summary>
-        /// <param name="_style"></param>
-        public void LoadStyles(List<ImageStyle> _style)
+        private void LoadComboBox(ComboBox comboBox, IEnumerable<string> items, bool addEmptyItem = false)
         {
-            cklstbxStyles.Items.Clear();
-            foreach (var item in _style)
-            {
-                if (string.IsNullOrEmpty(item.styleName.Trim())) continue;
-                cklstbxStyles.Items.Add(item.styleName.Trim());
-            }
+            comboBox.Items.Clear();
+            if (addEmptyItem) comboBox.Items.Add(string.Empty);
+            comboBox.Items.AddRange(items.Where(i => !string.IsNullOrEmpty(i)).ToArray());
         }
 
-        /// <summary>
-        /// Build out Categories Check List Box
-        /// </summary>
-        /// <param name="_cat"></param>
-        public void LoadCategories(List<ImageCategory> _cat)
-        {
-            cklstbxCategories.Items.Clear();
-            foreach (var item in _cat)
-            {
-                if (string.IsNullOrEmpty(item.category.Trim())) continue;
-                cklstbxCategories.Items.Add(item.category.Trim());
-            }
-        }
-
-        /// <summary>
-        /// Build out Model Check List Box
-        /// </summary>
-        /// <param name="_Model"></param>
-        public void LoadModels(List<ImageModel> _model)
-        {
-            cklstbxModels.Items.Clear();
-            foreach (var item in _model)
-            {
-                if (string.IsNullOrEmpty(item.modelName.Trim())) continue;
-                cklstbxModels.Items.Add(item.modelName.Trim());
-            }
-        }
-
-        /// <summary>
-        /// Build out Lora Check List Box
-        /// </summary>
-        /// <param name="_lora"></param>
-        public void LoadLoras(List<ImageLora> _lora)
-        {
-            cklstbxLoras.Items.Clear();
-            foreach (var item in _lora)
-            {
-                if (string.IsNullOrEmpty(item.lora.Trim())) continue;
-                cklstbxLoras.Items.Add(item.lora.Trim());
-            }
-        }
-
-        /// <summary>
-        /// Build out Aspect Ratio ComboBox
-        /// </summary>
-        /// <param name="_ar"></param>
-        public void LoadAspectRatios(List<ImageAspectRatio> _ar)
-        {
-            cboAspectRatio.Items.Clear();
-            cboAspectRatio.Items.Add("");
-            foreach (var item in _ar)
-            {
-                if (string.IsNullOrEmpty(item.AspectRatio.Trim())) continue;
-                cboAspectRatio.Items.Add(item.AspectRatio.Trim());
-            }
-        }
-
-        /// <summary>
-        /// Build out Sample Method Ratio ComboBox
-        /// </summary>
-        /// <param name="_ar"></param>
-        public void LoadSampleMethods(List<ImageSampleMethod> _sm)
-        {
-            cboSampleMethod.Items.Clear();
-            foreach (var item in _sm)
-            {
-                if (string.IsNullOrEmpty(item.SampleMethod.Trim())) continue;
-                cboSampleMethod.Items.Add(item.SampleMethod.Trim());
-            }
-        }
-
-        /// <summary>
-        /// Clear/Reset form
-        /// </summary>
-        public void clearfields()
+        private void ClearFields()
         {
             cklstbxStyles.ClearSelected();
             cklstbxLoras.ClearSelected();
-            cklstbxModels.ClearSelected();  
+            cklstbxModels.ClearSelected();
             cklstbxSites.ClearSelected();
-            txtNegPrompt.Text               = "";
-            txtTitle.Text                   = "";
-            txtPrompt.Text                  = "";
-            txtNotes.Text                   = "";
-            txtRating.Text                  = "";
-            txtSeed.Text                    = "";
-            txtSteps.Text                   = "";
-            txtScheduler.Text               = "";
-            txtDpmsolverGuideance.Text      = "";
-            txtDpmsolverInterference.Text   = "";
+            txtNegPrompt.Clear();
+            txtTitle.Clear();
+            txtPrompt.Clear();
+            txtNotes.Clear();
+            txtRating.Clear();
+            txtSeed.Clear();
+            txtSteps.Clear();
+            txtScheduler.Clear();
+            txtDpmsolverGuideance.Clear();
+            txtDpmsolverInterference.Clear();
             cboAspectRatio.SelectedIndex    = 0;
             cboSampleMethod.SelectedIndex   = 0;
         }
-
-        /// <summary>
-        /// Display Custom Message Box
-        /// </summary>
-        /// <param name="title"></param>
-        /// <param name="message"></param>
-        /// <param name="icon"></param>
-        /// <param name="buttonText1"></param>
-        /// <param name="buttonText2"></param>
-        /// <param name="systemMessage"></param>
-        private int ShowMsgBox(CustMsgBox cmb)
-        {
-            int result = 0;
-
-            CustMsgBox custMsgBox = new CustMsgBox
-            {
-                Title = cmb.Title.Trim(),
-                Message = cmb.Message.Trim(),
-                SystemMessage = cmb.SystemMessage.Trim(),
-                ButtonText1 = cmb.ButtonText1,
-                ButtonText2 = cmb.ButtonText2,
-                ButtonText3 = cmb.ButtonText3,
-                ButtonText4 = cmb.ButtonText4,
-                ButtonText5 = cmb.ButtonText5,
-                ButtonText6 = cmb.ButtonText6,
-                Icon = (int)cmb.Icon
-            };
-
-            if (string.IsNullOrEmpty(custMsgBox.SystemMessage))
-            {
-                // Standard Message Box
-                MsgBoxUser cMsgBox = new MsgBoxUser(custMsgBox);
-                cMsgBox.ShowDialog();
-                result = (int)cMsgBox.Result;
-                return result;
-            }
-            else
-            {
-                //  System Error Message Box
-                MsgBoxSystem cMsgBox = new MsgBoxSystem(custMsgBox);
-                cMsgBox.ShowDialog();
-                result = (int)cMsgBox.Result;
-                return result;
-            }
-        }
-
-
 
         #endregion
 
@@ -843,15 +459,12 @@ namespace AIPrompts.Forms
         public enum _icon
         {
             Information = 1,
-            Question = 2,
-            Warning = 3,
-            Error = 4,
-            Misc = 5
+            Question    = 2,
+            Warning     = 3,
+            Error       = 4,
+            Misc        = 5
         }
 
         #endregion
-
-
-
     }
 }
