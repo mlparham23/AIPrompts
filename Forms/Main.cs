@@ -8,14 +8,14 @@ namespace AIPrompts
     public partial class Main : Form
     {
         #region Class variables
-        CustMsgBox  CustMsgBox  = new CustMsgBox();
-        string      title       = "";  // message, title, icon, button...
-        string      message     = "";
-        string      errMessage  = "";
-        string      rank        = "";
-        string      temp        = "";
-        string      result      = "";
-        int         cmresult    = 0;
+        CustMsgBox CustMsgBox = new CustMsgBox();
+        string title = "";  // message, title, icon, button...
+        string message = "";
+        string errMessage = "";
+        string rank = "";
+        string temp = "";
+        string result = "";
+        int cmresult = 0;
 
         #endregion
 
@@ -35,7 +35,7 @@ namespace AIPrompts
         /// <param name="e"></param>
         private void Main_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         #endregion  // Form Startup
@@ -168,6 +168,17 @@ namespace AIPrompts
         }
 
         /// <summary>
+        /// Open notepad
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnAIImagesNote_Click(object sender, EventArgs e)
+        {
+            AIImageNotes notes = new AIImageNotes();
+            notes.Show();
+        }
+
+        /// <summary>
         /// Form: AI Chat/Add
         /// </summary>
         /// <param name="sender"></param>
@@ -296,10 +307,10 @@ namespace AIPrompts
         public enum _icon
         {
             Information = 1,
-            Question    = 2,
-            Warning     = 3,
-            Error       = 4,
-            Misc        = 5
+            Question = 2,
+            Warning = 3,
+            Error = 4,
+            Misc = 5
         }
 
         #endregion

@@ -32,7 +32,7 @@ namespace AIPrompts.Forms
         /// <param name="e"></param>
         private void ImageMaintMain_Load(object sender, EventArgs e)
         {
-           
+
         }
 
         #region Menustrip
@@ -304,6 +304,10 @@ namespace AIPrompts.Forms
 
         #endregion
 
- 
+
+        private void btnImageNotes_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

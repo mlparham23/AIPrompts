@@ -3,27 +3,32 @@
   "WorkspaceRootPath": "D:\\Dev\\AIPrompts\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|d:\\dev\\aiprompts\\forms\\addimageprompt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\forms\\addimageprompt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\addimageprompt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\dbinout.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|d:\\dev\\aiprompts\\dbinout.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:dbinout.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\mlpar\\AppData\\Local\\SourceServer\\fdb04bba1e32ca3ea20f9bfaf5ce6f3c66ddca401f6f90c12512920a38fa2dbd\\Forms\\AddImagePrompt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\forms\\addimageprompt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\addimageprompt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\forms\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\forms\\aiimagenotes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\aiimagenotes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\forms\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|d:\\dev\\aiprompts\\forms\\aiimagenotes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\aiimagenotes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\forms\\aiimagenotes.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\aiimagenotes.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|D:\\Dev\\AIPrompts\\forms\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{311EC6E2-D109-4A2C-A7D5-28E81511239A}|AIPrompts.csproj|solutionrelative:forms\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -33,22 +38,11 @@
       "DocumentGroups": [
         {
           "DockedHeight": 296,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AddImagePrompt.cs",
-              "DocumentMoniker": "C:\\Users\\mlpar\\AppData\\Local\\SourceServer\\fdb04bba1e32ca3ea20f9bfaf5ce6f3c66ddca401f6f90c12512920a38fa2dbd\\Forms\\AddImagePrompt.cs",
-              "ToolTip": "C:\\Users\\mlpar\\AppData\\Local\\SourceServer\\fdb04bba1e32ca3ea20f9bfaf5ce6f3c66ddca401f6f90c12512920a38fa2dbd\\Forms\\AddImagePrompt.cs",
-              "ViewState": "AQIAAMAAAAAAAAAAAAAuwOMAAAAQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-28T08:17:38.677Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -58,9 +52,47 @@
               "RelativeDocumentMoniker": "DBInOut.cs",
               "ToolTip": "D:\\Dev\\AIPrompts\\DBInOut.cs",
               "RelativeToolTip": "DBInOut.cs",
-              "ViewState": "AQIAAIsBAAAAAAAAAAAwwKcBAAAIAAAA",
+              "ViewState": "AQIAAM4BAAAAAAAAAAAAwM0BAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-27T05:18:21.932Z",
+              "WhenOpened": "2024-05-18T21:03:12.89Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AIImageNotes.cs [Design]",
+              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\AIImageNotes.cs",
+              "RelativeDocumentMoniker": "Forms\\AIImageNotes.cs",
+              "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\AIImageNotes.cs [Design]",
+              "RelativeToolTip": "Forms\\AIImageNotes.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-02T17:42:22.428Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AIImageNotes.cs",
+              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\AIImageNotes.cs",
+              "RelativeDocumentMoniker": "Forms\\AIImageNotes.cs",
+              "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\AIImageNotes.cs",
+              "RelativeToolTip": "Forms\\AIImageNotes.cs",
+              "ViewState": "AQIAADUAAAAAAAAAAAAgwE0AAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-02T17:38:04.026Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AIImageNotes.Designer.cs",
+              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\AIImageNotes.Designer.cs",
+              "RelativeDocumentMoniker": "Forms\\AIImageNotes.Designer.cs",
+              "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\AIImageNotes.Designer.cs",
+              "RelativeToolTip": "Forms\\AIImageNotes.Designer.cs",
+              "ViewState": "AQIAAEABAAAAAAAAAAAgwEsBAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-02T17:38:43.596Z",
               "EditorCaption": ""
             },
             {
@@ -71,47 +103,35 @@
               "RelativeDocumentMoniker": "Forms\\AddImagePrompt.cs",
               "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\AddImagePrompt.cs",
               "RelativeToolTip": "Forms\\AddImagePrompt.cs",
-              "ViewState": "AQIAAFwBAAAAAAAAAAAAAGUBAAAZAAAA",
+              "ViewState": "AQIAAHQBAAAAAAAAAAAAwIQBAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-20T19:58:51.721Z",
+              "WhenOpened": "2024-05-02T17:12:12.434Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "AddImagePrompt.cs [Design]",
               "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\AddImagePrompt.cs",
               "RelativeDocumentMoniker": "Forms\\AddImagePrompt.cs",
               "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\AddImagePrompt.cs [Design]",
               "RelativeToolTip": "Forms\\AddImagePrompt.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-20T19:24:38.258Z",
+              "WhenOpened": "2024-05-02T17:10:30.11Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "Main.cs",
               "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\Main.cs",
               "RelativeDocumentMoniker": "Forms\\Main.cs",
               "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\Main.cs",
               "RelativeToolTip": "Forms\\Main.cs",
-              "ViewState": "AQIAAIEAAAAAAAAAAAApwI4AAAAgAAAA",
+              "ViewState": "AQIAAJ4AAAAAAAAAAAAQwKQAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-20T19:24:27.82Z",
+              "WhenOpened": "2024-05-02T17:10:14.959Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Main.cs [Design]",
-              "DocumentMoniker": "D:\\Dev\\AIPrompts\\Forms\\Main.cs",
-              "RelativeDocumentMoniker": "Forms\\Main.cs",
-              "ToolTip": "D:\\Dev\\AIPrompts\\Forms\\Main.cs [Design]",
-              "RelativeToolTip": "Forms\\Main.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-20T19:24:24.292Z",
-              "EditorCaption": " [Design]"
             }
           ]
         },
@@ -121,23 +141,15 @@
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{28836128-fc2c-11d2-a433-00c04f72d18a}"
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
             }
           ]
         }

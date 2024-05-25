@@ -18,15 +18,16 @@ namespace AIPrompts.Forms
     {
         #region Class Variables
 
-        List<ImageCategory>     cat             = new List<ImageCategory>();
-        List<ImageLora>         lora            = new List<ImageLora>();
-        List<ImageSite>         site            = new List<ImageSite>();
-        List<ImageStyle>        style           = new List<ImageStyle>();
-        List<ImageModel>        model           = new List<ImageModel>();
-        List<ImageAspectRatio>  aspectRatios    = new List<ImageAspectRatio>();
-        List<ImageSampleMethod> sampleMethods   = new List<ImageSampleMethod>();
-        CustMsgBox              cmb             = new CustMsgBox();
-        DBInOut                 db              = new DBInOut();
+        List<ImageCategory> cat = new List<ImageCategory>();
+        List<ImageLora> lora = new List<ImageLora>();
+        List<ImageSite> site = new List<ImageSite>();
+        List<ImageStyle> style = new List<ImageStyle>();
+        List<ImageArtist> artist = new List<ImageArtist>();
+        List<ImageModel> model = new List<ImageModel>();
+        List<ImageAspectRatio> aspectRatios = new List<ImageAspectRatio>();
+        List<ImageSampleMethod> sampleMethods = new List<ImageSampleMethod>();
+        CustMsgBox cmb = new CustMsgBox();
+        DBInOut db = new DBInOut();
 
         #endregion
 
@@ -49,17 +50,19 @@ namespace AIPrompts.Forms
             LoadCategories();
             LoadSites();
             LoadStyles();
+            LoadArtist();
             LoadAspectRatio();
             LoadSampleMethod();
         }
 
         private void SetupCheckOnClick()
         {
-            cklstbxCategories.CheckOnClick  = true;
-            cklstbxLoras.CheckOnClick       = true;
-            cklstbxSites.CheckOnClick       = true;
-            cklstbxStyles.CheckOnClick      = true;
-            cklstbxModels.CheckOnClick      = true;
+            cklstbxCategories.CheckOnClick = true;
+            cklstbxLoras.CheckOnClick = true;
+            cklstbxSites.CheckOnClick = true;
+            cklstbxStyles.CheckOnClick = true;
+            cklstbxArtist.CheckOnClick = true;
+            cklstbxModels.CheckOnClick = true;
         }
 
         #endregion
@@ -67,27 +70,31 @@ namespace AIPrompts.Forms
         #region Form
         #region Menu Strip
 
-        private void mnustrpFileExit_Click(             object sender, EventArgs e) => Close();
-        private void mnustrpFunctionAddPrompt_Click(    object sender, EventArgs e) => addPrompt();
-        private void mnustrpFunctionClearScreen_Click(  object sender, EventArgs e) => ClearFields();
+        private void mnustrpFileExit_Click(object sender, EventArgs e) => Close();
+        private void mnustrpFunctionAddPrompt_Click(object sender, EventArgs e) => addPrompt();
+        private void mnustrpFunctionClearScreen_Click(object sender, EventArgs e) => ClearFields();
         private void mnustrpFunctionRefreshScreen_Click(object sender, EventArgs e) => RefreshLists();
 
         #endregion
         #region Form Controls
 
-        private void btnAdd_Click(                  object sender, EventArgs e) => addPrompt();
-        private void btnClear_Click(                object sender, EventArgs e) => ClearFields();
-        private void btnRefresh_Click(              object sender, EventArgs e) => RefreshLists();
-        private void btnExit_Click(                 object sender, EventArgs e) => Close();
-        private void picbxRefreshSites_Click(       object sender, EventArgs e) => LoadSites();
-        private void picbxRefreshLoras_Click(       object sender, EventArgs e) => LoadLoras();
-        private void picbxRefreshModels_Click(      object sender, EventArgs e) => LoadModels();
-        private void picbxRefreshCategories_Click(  object sender, EventArgs e) => LoadCategories();
-        private void picbxRefreshStyles_Click(      object sender, EventArgs e) => LoadStyles();
+        private void btnAdd_Click(object sender, EventArgs e) => addPrompt();
+        private void btnClear_Click(object sender, EventArgs e) => ClearFields();
+        private void btnRefresh_Click(object sender, EventArgs e) => RefreshLists();
+        private void btnExit_Click(object sender, EventArgs e) => Close();
+        private void picbxRefreshSites_Click(object sender, EventArgs e) => LoadSites();
+        private void picbxRefreshLoras_Click(object sender, EventArgs e) => LoadLoras();
+        private void picbxRefreshModels_Click(object sender, EventArgs e) => LoadModels();
+        private void picbxRefreshCategories_Click(object sender, EventArgs e) => LoadCategories();
+        private void picbxRefreshStyles_Click(object sender, EventArgs e) => LoadStyles();
+        //private void picbxRefreshArtist_Click(object sender, EventArgs e) => LoadArtist();
+        private void picbxNotes_Click(object sender, EventArgs e) => Loadnotes();
+
+        private void picbxRefreshArtist_Click_1(object sender, EventArgs e) => LoadArtist();
+        
 
         #endregion
         #endregion
-        // #endregion
 
         #region Methods
         #region Code
@@ -96,14 +103,15 @@ namespace AIPrompts.Forms
         {
             try
             {
-                var prompt              = GetPromptFromForm();
-                var settings            = GetSettingsFromForm();
-                List<int> categories    = GetIDsFromForm(cklstbxCategories, cat, c => c.category, c => c.catID);
-                List<int> sites         = GetIDsFromForm(cklstbxSites,      site, s => s.siteName, s => s.siteID);
-                List<int> loras         = GetIDsFromForm(cklstbxLoras,      lora, l => l.lora, l => l.loraID);
-                List<int> models        = GetIDsFromForm(cklstbxModels,     model, m => m.modelName, m => m.modelID);
-                List<int> styles        = GetIDsFromForm(cklstbxStyles,     style, s => s.styleName, s => s.styleID);
-                prompt                  = CleanPrompt(prompt);
+                var prompt = GetPromptFromForm();
+                var settings = GetSettingsFromForm();
+                List<int> categories = GetIDsFromForm(cklstbxCategories, cat, c => c.category, c => c.catID);
+                List<int> sites = GetIDsFromForm(cklstbxSites, site, s => s.siteName, s => s.siteID);
+                List<int> loras = GetIDsFromForm(cklstbxLoras, lora, l => l.lora, l => l.loraID);
+                List<int> models = GetIDsFromForm(cklstbxModels, model, m => m.modelName, m => m.modelID);
+                List<int> styles = GetIDsFromForm(cklstbxStyles, style, s => s.styleName, s => s.styleID);
+                List<int> artists = GetIDsFromForm(cklstbxArtist, artist, a => a.artistName, a => a.artistID);
+                prompt = CleanPrompt(prompt);
                 DisplayEditedPrompt(prompt);
 
                 var validationResult = ValidateInputs(prompt, categories, sites, settings);
@@ -124,11 +132,12 @@ namespace AIPrompts.Forms
 
                 var promptId = db.AddAIImagePrompt(prompt);
                 db.addAIImageCategory(promptId, categories);
-                db.addAIImageLora(    promptId, loras);
-                db.addAIImageModel(   promptId, models);
-                db.addAIImageSite(    promptId, prompt, sites);
-                db.addAIImageStyle(   promptId, styles);
-                db.AddAISettings(     promptId, settings);
+                db.addAIImageLora(promptId, loras);
+                db.addAIImageModel(promptId, models);
+                db.addAIImageSite(promptId, prompt, sites);
+                db.addAIImageStyle(promptId, styles);
+                db.addAIImageArtist(promptId, artists);
+                db.AddAISettings(promptId, settings);
 
                 ShowSuccessMessage($"Prompt has been added to database.{Environment.NewLine}{Environment.NewLine}Title: {prompt.promptTitle}");
             }
@@ -141,31 +150,31 @@ namespace AIPrompts.Forms
         private ImagePrompt CleanPrompt(ImagePrompt prompt)
         {
             //  Fix
-            prompt.prompt           = CleanStringForDatabase(prompt.prompt,         1000).Trim();
-            prompt.negativePrompt   = CleanStringForDatabase(prompt.negativePrompt, 1000).Trim();
-            prompt.promptTitle      = CleanStringForDatabase(prompt.promptTitle,    50).Trim();
-            prompt.notes            = CleanStringForDatabase(prompt.notes,          1000).Trim();
+            prompt.prompt = CleanStringForDatabase(prompt.prompt, 1000).Trim();
+            prompt.negativePrompt = CleanStringForDatabase(prompt.negativePrompt, 1000).Trim();
+            prompt.promptTitle = CleanStringForDatabase(prompt.promptTitle, 50).Trim();
+            if (!string.IsNullOrEmpty(prompt.notes)) prompt.notes = CleanStringForDatabase(prompt.notes, 1000).Trim();
 
             return prompt;
         }
 
         private void DisplayEditedPrompt(ImagePrompt prompt)
-        { 
-            txtPrompt.Text      = prompt.prompt.Trim();
-            txtNegPrompt.Text   = prompt.negativePrompt.Trim();
-            txtNotes.Text       = prompt.notes.Trim();
-            txtTitle.Text       = prompt.promptTitle.Trim();
+        {
+            txtPrompt.Text = prompt.prompt.Trim();
+            txtNegPrompt.Text = prompt.negativePrompt.Trim();
+            txtNotes.Text = prompt.notes.Trim();
+            txtTitle.Text = prompt.promptTitle.Trim();
         }
 
         private ImagePrompt GetPromptFromForm()
         {
             return new ImagePrompt
             {
-                prompt          = txtPrompt.Text.Trim(),
-                negativePrompt  = txtNegPrompt.Text.Trim(),
-                promptTitle     = txtTitle.Text.Trim(),
-                notes           = txtNotes.Text.Trim(),
-                rating          = int.TryParse(txtRating.Text.Trim(), out var rating) ? rating : 0
+                prompt = txtPrompt.Text.Trim(),
+                negativePrompt = txtNegPrompt.Text.Trim(),
+                promptTitle = txtTitle.Text.Trim(),
+                notes = txtNotes.Text.Trim(),
+                rating = int.TryParse(txtRating.Text.Trim(), out var rating) ? rating : 0
             };
         }
 
@@ -173,17 +182,17 @@ namespace AIPrompts.Forms
         {
             return new ImageSettings
             {
-                imageAspectRatio            = cboAspectRatio.Text.Trim(),
-                seed                        = int.TryParse(txtSeed.Text.Trim(),                     out var seed)                   ? seed : 0,
-                CGFScale                    = int.TryParse(txtCFGScale.Text.Trim(),                 out var cgfScale)               ? cgfScale : 0,
-                steps                       = int.TryParse(txtSteps.Text.Trim(),                    out var steps)                  ? steps : 0,
-                scheduler                   = int.TryParse(txtScheduler.Text.Trim(),                out var scheduler)              ? scheduler : 0,
-                samplingMethod              = cboSampleMethod.Text.Trim(),
-                DPMSolverGuidanceScale      = int.TryParse(txtDpmsolverGuideance.Text.Trim(),       out var dpmSolverGuidance)      ? dpmSolverGuidance : 0,
-                DPMSolverInterferenceSteps  = int.TryParse(txtDpmsolverInterference.Text.Trim(),    out var dpmSolverInterference)  ? dpmSolverInterference : 0,
-                SASolverGuidanceScale       = int.TryParse(txtSaSolverGuideance.Text.Trim(),        out var saSolverGuidance)       ? saSolverGuidance : 0,
-                SASolverInterferenceSteps   = int.TryParse(txtSaSolverInterference.Text.Trim(),     out var saSolverInterference)   ? saSolverInterference : 0,
-                tags                        = txtTags.Text.Trim()
+                imageAspectRatio = cboAspectRatio.Text.Trim(),
+                seed = int.TryParse(txtSeed.Text.Trim(), out var seed) ? seed : 0,
+                CGFScale = int.TryParse(txtCFGScale.Text.Trim(), out var cgfScale) ? cgfScale : 0,
+                steps = int.TryParse(txtSteps.Text.Trim(), out var steps) ? steps : 0,
+                scheduler = int.TryParse(txtScheduler.Text.Trim(), out var scheduler) ? scheduler : 0,
+                samplingMethod = cboSampleMethod.Text.Trim(),
+                DPMSolverGuidanceScale = int.TryParse(txtDpmsolverGuideance.Text.Trim(), out var dpmSolverGuidance) ? dpmSolverGuidance : 0,
+                DPMSolverInterferenceSteps = int.TryParse(txtDpmsolverInterference.Text.Trim(), out var dpmSolverInterference) ? dpmSolverInterference : 0,
+                SASolverGuidanceScale = int.TryParse(txtSaSolverGuideance.Text.Trim(), out var saSolverGuidance) ? saSolverGuidance : 0,
+                SASolverInterferenceSteps = int.TryParse(txtSaSolverInterference.Text.Trim(), out var saSolverInterference) ? saSolverInterference : 0,
+                tags = txtTags.Text.Trim()
             };
         }
 
@@ -201,7 +210,7 @@ namespace AIPrompts.Forms
 
                 // Check if the input exceeds the maximum length of the varchar field
                 // Change this value to match your varchar field's maximum length
-                if (maxLength > 0) 
+                if (maxLength > 0)
                 {
                     if (cleanedString.Length > maxLength)
                     {
@@ -252,30 +261,11 @@ namespace AIPrompts.Forms
             return selectedIDs;
         }
 
-        //private List<ImageSite> GetSitesFromForm()
-        //{
-        //    return GetSelectedItems(cklstbxSites).Select(s => new ImageSite { siteName = s }).ToList();
-        //}
-
-        //private List<ImageLora> GetLorasFromForm()
-        //{
-        //    return GetSelectedItems(cklstbxLoras).Select(l => new ImageLora { lora = l }).ToList();
-        //}
-
-        //private List<ImageModel> GetModelsFromForm()
-        //{
-        //    return GetSelectedItems(cklstbxModels).Select(m => new ImageModel { modelName = m }).ToList();
-        //}
-
-        //private List<ImageStyle> GetStylesFromForm()
-        //{
-        //    return GetSelectedItems(cklstbxStyles).Select(s => new ImageStyle { styleName = s }).ToList();
-        //}
-
-        //private List<string> GetSelectedItems(CheckedListBox clb)
-        //{
-        //    return clb.CheckedItems.Cast<string>().ToList();
-        //}
+        private void Loadnotes()
+        {
+            AIImageNotes notes = new AIImageNotes();
+            notes.Show();
+        }
 
         private string ValidateInputs(ImagePrompt prompt, List<int> categories, List<int> sites, ImageSettings settings)
         {
@@ -306,8 +296,8 @@ namespace AIPrompts.Forms
         private bool ConfirmAddPrompt()
         {
             cmb.ResetToDefault();
-            cmb.Title       = "Add Prompt";
-            cmb.Message     = "Are you sure you want to add this prompt?";
+            cmb.Title = "Add Prompt";
+            cmb.Message = "Are you sure you want to add this prompt?";
             cmb.ButtonText1 = "Yes";
             cmb.ButtonText2 = "No";
             cmb.Icon = (int)MessageBoxIcon.Question;
@@ -317,20 +307,20 @@ namespace AIPrompts.Forms
         private void ShowSuccessMessage(string message)
         {
             cmb.ResetToDefault();
-            cmb.Title       = "Add Prompt";
-            cmb.Message     = message;
+            cmb.Title = "Add Prompt";
+            cmb.Message = message;
             cmb.ButtonText1 = "OK";
-            cmb.Icon        = (int)MessageBoxIcon.Information;
+            cmb.Icon = (int)MessageBoxIcon.Information;
             ShowMessageBox(cmb);
         }
 
         private void ShowErrorMessage(string message)
         {
             cmb.ResetToDefault();
-            cmb.Title       = "Error";
-            cmb.Message     = message;
+            cmb.Title = "Error";
+            cmb.Message = message;
             cmb.ButtonText1 = "OK";
-            cmb.Icon        = (int)MessageBoxIcon.Error;
+            cmb.Icon = (int)MessageBoxIcon.Error;
             ShowMessageBox(cmb);
         }
 
@@ -359,6 +349,7 @@ namespace AIPrompts.Forms
             LoadCategories();
             LoadSites();
             LoadStyles();
+            LoadArtist();
         }
 
         private void LoadLoras()
@@ -396,6 +387,13 @@ namespace AIPrompts.Forms
             LoadListBox(cklstbxStyles, style.Select(s => s.styleName));
         }
 
+        private void LoadArtist()
+        {
+            artist.Clear();
+            artist.AddRange(db.getAllArtist());
+            LoadListBox(cklstbxArtist, artist.Select(s => s.artistName));
+        }
+
         private void LoadAspectRatio()
         {
             aspectRatios.Clear();
@@ -426,6 +424,7 @@ namespace AIPrompts.Forms
         private void ClearFields()
         {
             cklstbxStyles.ClearSelected();
+            cklstbxArtist.ClearSelected();
             cklstbxLoras.ClearSelected();
             cklstbxModels.ClearSelected();
             cklstbxSites.ClearSelected();
@@ -439,9 +438,12 @@ namespace AIPrompts.Forms
             txtScheduler.Clear();
             txtDpmsolverGuideance.Clear();
             txtDpmsolverInterference.Clear();
-            cboAspectRatio.SelectedIndex    = 0;
-            cboSampleMethod.SelectedIndex   = 0;
+            cboAspectRatio.SelectedIndex = 0;
+            cboSampleMethod.SelectedIndex = 0;
         }
+
+
+
 
         #endregion
 
@@ -459,10 +461,10 @@ namespace AIPrompts.Forms
         public enum _icon
         {
             Information = 1,
-            Question    = 2,
-            Warning     = 3,
-            Error       = 4,
-            Misc        = 5
+            Question = 2,
+            Warning = 3,
+            Error = 4,
+            Misc = 5
         }
 
         #endregion

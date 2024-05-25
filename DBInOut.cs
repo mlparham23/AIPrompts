@@ -458,6 +458,38 @@ namespace AIPrompts
             }
         }
 
+
+        public void addAIImageArtist(int prompt, List<int> artists)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("INSERT INTO AIImageArtistBridge (ArtistID, PromptID) VALUES (@ArtistID, @PromptID)", connection))
+                {
+                    command.Parameters.Add("@ArtistID", System.Data.SqlDbType.Int);
+                    command.Parameters.Add("@PromptID", System.Data.SqlDbType.Int);
+
+                    foreach (var item in artists)
+                    {
+                        command.Parameters["@ArtistID"].Value = item;
+                        command.Parameters["@PromptID"].Value = prompt;
+
+                        try
+                        {
+                            command.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            message = "Failed to add to Style Table.\r\n\r\n";
+                            message += "Artist Style:  " + item.ToString();
+                            ShowMsgBox("DB Add Artist Name  - Failed", message, (int)_icon.Error, "OK", "", "", "", "", "", ex.ToString());
+                        }
+                    }
+                }
+            }
+        }
+
+
         /// <summary>
         /// Add to Lora Bridge during add image prompt
         /// </summary>
@@ -736,6 +768,51 @@ namespace AIPrompts
 
             return st;
         }
+
+        /// <summary>
+        /// Get all artist
+        /// </summary>
+        /// <returns></returns>
+        public List<ImageArtist> getAllArtist()
+        {
+            //  Variables
+            List<ImageArtist> at = new List<ImageArtist>();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string sql = "SELECT * FROM AIImageArtist Order by ArtistName";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ImageArtist m = new ImageArtist();
+                                {
+                                    m.artistID      = reader.GetInt32(reader.GetOrdinal("ArtistID"));
+                                    m.artistName    = reader.GetString(reader.GetOrdinal("ArtistName"));
+                                    m.artistStyle   = reader.GetString(reader.GetOrdinal("ArtistStyle"));
+                                    m.createdDate   = reader.GetDateTime(reader.GetOrdinal("CreateDate"));
+                                }
+                                at.Add(m);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string message = "Failed to load AI Image Artist.";
+                ShowMsgBox("DB Get AI Image Artist - Failed", message, (int)_icon.Error, "OK", "", "", "", "", "", ex.ToString());
+            }
+
+            return at;
+        }
+
+
 
         /// <summary>
         /// Get all Chat Categories in ascending order

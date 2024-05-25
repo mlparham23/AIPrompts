@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AIPrompts")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+91fcb0e7bd4cc3d04290e9d8b89cd2223d11313e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+34955d4029082ae7df30820fd97cbc4103fda7a4")]
 [assembly: System.Reflection.AssemblyProductAttribute("AIPrompts")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AIPrompts")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -62,6 +62,7 @@
             btnRefresh = new Button();
             btnExit = new Button();
             grpbxSettings = new GroupBox();
+            picbxNotes = new PictureBox();
             label24 = new Label();
             label23 = new Label();
             label22 = new Label();
@@ -103,6 +104,9 @@
             picbxRefreshModels = new PictureBox();
             picbxRefreshCategories = new PictureBox();
             picbxRefreshStyles = new PictureBox();
+            cklstbxArtist = new CheckedListBox();
+            grpbxArtist = new GroupBox();
+            picbxRefreshArtist = new PictureBox();
             mnustrp.SuspendLayout();
             grpbxPrompt.SuspendLayout();
             grpbxSites.SuspendLayout();
@@ -110,12 +114,15 @@
             grpbxModels.SuspendLayout();
             grpbxStyles.SuspendLayout();
             grpbxSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picbxNotes).BeginInit();
             grpbxCategories.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)picbxRefreshSites).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picbxRefreshLoras).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picbxRefreshModels).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picbxRefreshCategories).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picbxRefreshStyles).BeginInit();
+            grpbxArtist.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picbxRefreshArtist).BeginInit();
             SuspendLayout();
             // 
             // mnustrp
@@ -123,7 +130,7 @@
             mnustrp.Items.AddRange(new ToolStripItem[] { mnustrpFile, addPromptToolStripMenuItem, mnustrpFunction });
             mnustrp.Location = new Point(0, 0);
             mnustrp.Name = "mnustrp";
-            mnustrp.Size = new Size(1637, 24);
+            mnustrp.Size = new Size(1874, 24);
             mnustrp.TabIndex = 0;
             mnustrp.Text = "menuStrip1";
             // 
@@ -413,6 +420,7 @@
             // 
             // grpbxSettings
             // 
+            grpbxSettings.Controls.Add(picbxNotes);
             grpbxSettings.Controls.Add(label24);
             grpbxSettings.Controls.Add(label23);
             grpbxSettings.Controls.Add(label22);
@@ -453,6 +461,17 @@
             grpbxSettings.TabIndex = 10;
             grpbxSettings.TabStop = false;
             grpbxSettings.Text = "Settings";
+            // 
+            // picbxNotes
+            // 
+            picbxNotes.Image = (Image)resources.GetObject("picbxNotes.Image");
+            picbxNotes.Location = new Point(1281, 41);
+            picbxNotes.Name = "picbxNotes";
+            picbxNotes.Size = new Size(87, 91);
+            picbxNotes.SizeMode = PictureBoxSizeMode.StretchImage;
+            picbxNotes.TabIndex = 16;
+            picbxNotes.TabStop = false;
+            picbxNotes.Click += picbxNotes_Click;
             // 
             // label24
             // 
@@ -823,11 +842,42 @@
             picbxRefreshStyles.TabStop = false;
             picbxRefreshStyles.Click += picbxRefreshStyles_Click;
             // 
+            // cklstbxArtist
+            // 
+            cklstbxArtist.FormattingEnabled = true;
+            cklstbxArtist.Location = new Point(6, 22);
+            cklstbxArtist.Name = "cklstbxArtist";
+            cklstbxArtist.Size = new Size(213, 508);
+            cklstbxArtist.TabIndex = 0;
+            // 
+            // grpbxArtist
+            // 
+            grpbxArtist.Controls.Add(cklstbxArtist);
+            grpbxArtist.Location = new Point(1636, 27);
+            grpbxArtist.Name = "grpbxArtist";
+            grpbxArtist.Size = new Size(225, 539);
+            grpbxArtist.TabIndex = 6;
+            grpbxArtist.TabStop = false;
+            grpbxArtist.Text = "Artist";
+            // 
+            // picbxRefreshArtist
+            // 
+            picbxRefreshArtist.Image = (Image)resources.GetObject("picbxRefreshArtist.Image");
+            picbxRefreshArtist.Location = new Point(1810, 572);
+            picbxRefreshArtist.Name = "picbxRefreshArtist";
+            picbxRefreshArtist.Size = new Size(45, 41);
+            picbxRefreshArtist.SizeMode = PictureBoxSizeMode.StretchImage;
+            picbxRefreshArtist.TabIndex = 16;
+            picbxRefreshArtist.TabStop = false;
+            picbxRefreshArtist.Click += picbxRefreshArtist_Click_1;
+            // 
             // AddImagePrompt
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1637, 758);
+            ClientSize = new Size(1874, 758);
+            Controls.Add(picbxRefreshArtist);
+            Controls.Add(grpbxArtist);
             Controls.Add(picbxRefreshStyles);
             Controls.Add(picbxRefreshCategories);
             Controls.Add(picbxRefreshModels);
@@ -858,12 +908,15 @@
             grpbxStyles.ResumeLayout(false);
             grpbxSettings.ResumeLayout(false);
             grpbxSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picbxNotes).EndInit();
             grpbxCategories.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)picbxRefreshSites).EndInit();
             ((System.ComponentModel.ISupportInitialize)picbxRefreshLoras).EndInit();
             ((System.ComponentModel.ISupportInitialize)picbxRefreshModels).EndInit();
             ((System.ComponentModel.ISupportInitialize)picbxRefreshCategories).EndInit();
             ((System.ComponentModel.ISupportInitialize)picbxRefreshStyles).EndInit();
+            grpbxArtist.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picbxRefreshArtist).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -944,5 +997,9 @@
         private PictureBox picbxRefreshModels;
         private PictureBox picbxRefreshCategories;
         private PictureBox picbxRefreshStyles;
+        private PictureBox picbxNotes;
+        private CheckedListBox cklstbxArtist;
+        private GroupBox grpbxArtist;
+        private PictureBox picbxRefreshArtist;
     }
 }

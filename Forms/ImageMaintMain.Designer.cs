@@ -56,6 +56,7 @@
             btnEditLora = new Button();
             grpbxEditPrompt = new GroupBox();
             btnCloseWindow = new Button();
+            btnImageNotes = new Button();
             mnustrp.SuspendLayout();
             grpbxEditTable.SuspendLayout();
             grpbxEditPrompt.SuspendLayout();
@@ -329,11 +330,24 @@
             btnCloseWindow.UseVisualStyleBackColor = false;
             btnCloseWindow.Click += btnCloseWindow_Click;
             // 
+            // btnImageNotes
+            // 
+            btnImageNotes.BackColor = Color.FromArgb(192, 255, 255);
+            btnImageNotes.Location = new Point(31, 259);
+            btnImageNotes.Margin = new Padding(3, 4, 3, 4);
+            btnImageNotes.Name = "btnImageNotes";
+            btnImageNotes.Size = new Size(138, 31);
+            btnImageNotes.TabIndex = 4;
+            btnImageNotes.Text = "Notes";
+            btnImageNotes.UseVisualStyleBackColor = false;
+            btnImageNotes.Click += btnImageNotes_Click;
+            // 
             // ImageMaintMain
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(404, 363);
+            Controls.Add(btnImageNotes);
             Controls.Add(btnCloseWindow);
             Controls.Add(grpbxEditPrompt);
             Controls.Add(grpbxEditTable);
@@ -383,5 +397,6 @@
         private ToolStripMenuItem mnustrpEditTableImageSettings;
         private ToolStripMenuItem mnustrpEditTableSite;
         private ToolStripMenuItem mnustrpEditTableSiteFeatures;
+        private Button btnImageNotes;
     }
 }
